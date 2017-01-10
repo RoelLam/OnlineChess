@@ -1,0 +1,7 @@
+{
+  "name": "OnlineChess",
+  "short_name": "OnlineChess",
+  "description": "Allows for playing chess online",
+  "start_url": "/",
+  "display": "standalone"
+}
