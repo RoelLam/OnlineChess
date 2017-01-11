@@ -8,11 +8,12 @@
         display: block;
       }
     </style>
-	<div style="margin-top: 100px; margin-bottom:auto;" ><center><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Chess_Board.svg"></iron-image></center></div>
+	<div style="margin-top: auto; margin-bottom:auto;" ><center><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Chess_Board.svg"></iron-image></center></div>
   </template>
 
   <script>
-	var iets = '500';
+	var iets = 0.75*window.screen.availHeight;
+	console.log(iets);
     Polymer({
       is: 'schaakbord-element',
 
