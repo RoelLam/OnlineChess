@@ -13,21 +13,24 @@
 
   <script>
 	var iets = '500';
-  	function maakRaster() {
-		var h; var w;
+  	function maakRaster(w) {
+		var h; 
 		var schaakbord = document.getElementById("poging2");
-		var links = 200;
-		var boven = 200;
+		var links = 480;
+		var boven = 130;
+		var stap = (w-5)*0.125;
 		for(i = 0; i<8; i++){
 			for(j=0; j<8; j++){
 				var div = document.createElement("div");
 				div.id="Vak" + i + "" + j;
-				div.style.position="absolute";
-				div.style.width="60px";
-				div.style.height="60px";
-				div.style.left=links + 60*j+"px";
-				div.style.top=boven + 60*i+"px";
+				// div.style.center="true";
+				div.style.position="relative";
+				div.style.width=stap + "px";
+				div.style.height=stap + "px";
+				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
+				div.style.top=-w -j*stap -7*i*stap + "px";
 				div.innerHTML="Hello ";
+				
 				schaakbord.appendChild(div);
 			}
 		}
@@ -36,8 +39,17 @@
 
     Polymer({
       is: 'raster-element',
-	  attached: function() {maakRaster() },	
 	  
+	  attached: function() {maakRaster(this.width) },	
+	  
+	  properties: {
+		width:{
+			type:String,
+		}
+	  },
+	  
+
+		
     });
 
 
