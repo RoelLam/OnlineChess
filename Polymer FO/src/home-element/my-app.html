@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/src/home-element/schaakbord-element.html">
 <link rel="import" href="/src/home-element/test-element-doorgeven-parameters.html">
+<link rel="import" href="/src/home-element/raster-element.html">
+
 
 <dom-module id="my-app">
   <template>
@@ -10,8 +12,11 @@
       } 
     </style>
 	<div>
-		<schaakbord-element width="{{my_app_width}}"></schaakbord-element>
+		<schaakbord-element width="{{my_app_width}}">
+			<raster-element></raster-element>
+		</schaakbord-element>
 		<test-element-doorgeven-parameters test_width="{{my_app_width}}"></test-element-doorgeven-parameters>
+		
 	</div>
   </template>
 
