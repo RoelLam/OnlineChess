@@ -7,27 +7,23 @@
       :host {
         display: block;
       }
-	  <!-- #schaakbord{
-		width: 	{{width}}
-		height: {{height}}
-	  } -->
     </style>
 	<div style="margin-top: 100px; margin-bottom:auto;" ><center><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Chess_Board.svg"></iron-image></center></div>
   </template>
 
   <script>
+	var iets = '500';
     Polymer({
-
       is: 'home-element',
 
       properties: {
         width: {
           type: String,
-          value: '500',
+          value: iets,
         },
 		height: {
           type: String,
-          value: '500',
+          value: iets,
         },
 		
       },
