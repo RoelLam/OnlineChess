@@ -1,0 +1,29 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+
+<dom-module id="test-element-doorgeven-parameters">
+  <template>
+    <style>
+      :host {
+        display: block;
+      } 
+    </style>
+	<div>
+		<p>Waarde is: {{test_width}}</p>
+	</div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'test-element-doorgeven-parameters',
+
+      properties: {
+        test_width: {
+          type: String,
+        },
+      },
+
+    });
+  </script>
+  
+</dom-module>
