@@ -46,7 +46,6 @@ INDEX VERSION 1.129+C:\Users\roel.lambers\OnlineChess\STS\.metadata\.plugins\org
 1442908508.index
 3256285438.index
 2218915897.index
-1555732084.index
 268920508.index
 1713134820.index
 134941530.index
