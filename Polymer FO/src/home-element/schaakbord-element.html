@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-image/iron-image.html">
 
+
+
 <dom-module id="schaakbord-element">
   <template>
     <style>
@@ -8,9 +10,9 @@
         display: block;
       }
     </style>
-	<div style="margin-top: 100px; margin-bottom:auto;"id="poging">
+	<div>
 		<center>
-			<div id="poging2"><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Bord/Chess_Board.png"></iron-image></div>
+			<div id="poging2" style="height:{{height}}px;"><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Bord/Chess_Board.png"></iron-image></div>
 			<content></content>
 		</center>
 	</div>

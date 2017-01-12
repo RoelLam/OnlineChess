@@ -1,0 +1,46 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-iconset/iron-iconset.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+
+
+<dom-module id="icon-set-schaakstukken-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+	</style>
+	<div>
+		<iron-iconset id="de_schaakstukken" name="de_schaakstukken" src="/Bord/2000px-Chess_Pieces_Sprite.png" width="1998" size="333"		
+		icons="king_white queen_white bishop_white knight_white rook_white pawn_white king_black queen_black bishop_black knight_black rook_black pawn_black"></iron-iconset>
+	</div>
+	<div>
+		<!-- <iron-icon icon="de_schaakstukken:king_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:queen_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:bishop_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:knight_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:rook_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:pawn_white"></iron-icon>
+		<iron-icon icon="de_schaakstukken:king_black"></iron-icon>
+		<iron-icon icon="de_schaakstukken:queen_black"></iron-icon>
+		<iron-icon icon="de_schaakstukken:bishop_black"></iron-icon>
+		<iron-icon icon="de_schaakstukken:knight_black"></iron-icon>
+		<iron-icon icon="de_schaakstukken:rook_black"></iron-icon>
+		<iron-icon icon="de_schaakstukken:pawn_black"></iron-icon> -->
+	</div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'icon-set-schaakstukken-element',
+
+      properties: {
+        test_width: {
+          type: String,
+        },
+      },
+
+    });
+  </script>
+  
+</dom-module>

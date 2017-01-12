@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-image/iron-image.html">
+<link rel="import" href="/src/home-element/icon-set-schaakstukken-element.html">
 
 <dom-module id="raster-element">
   <template>
@@ -33,8 +34,9 @@
 	}
 	function toonPion(i, j){
 		var div = document.getElementById("Vak" + i + "" + j);
+
 		var image = document.createElement("img");
-		image.src = '/Bord/Rook_white.png';
+		//image.src = '/Bord/Board_chess.png';
 		image.height = '80';
 		image.width = '80';
 		div.appendChild(image);
