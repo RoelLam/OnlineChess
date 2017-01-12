@@ -12,17 +12,13 @@
   </template>
 
   <script>
-	var iets = '500';
-  	function maakRaster(w) {
-		var h; 
+	function maakRaster(w) {
 		var schaakbord = document.getElementById("poging2");
-		var links = 480;
-		var boven = 130;
 		var stap = (w-5)*0.125;
 		for(i = 0; i<8; i++){
 			for(j=0; j<8; j++){
 				var div = document.createElement("div");
-				div.id="Vak" + i + "" + j;
+				//div.id="Vak" + i + "" + j;
 				// div.style.center="true";
 				div.style.position="relative";
 				div.style.width=stap + "px";
@@ -32,15 +28,26 @@
 				div.innerHTML="Hello ";
 				
 				schaakbord.appendChild(div);
+				
+				var img = document.createElement("img");
+				div.appendChild(img);
+				img.id = "Vak" + i + "" + j;
 			}
 		}
+	}
+	function toonPion(i, j){
+		var div = document.getElementById("Vak" + i + "" + j);
+		div.innerHTML = "";
+		div.src = "../Bord/Pawn_black.svg";
 	}
   
 
     Polymer({
       is: 'raster-element',
 	  
-	  attached: function() {maakRaster(this.width) },	
+	  attached: function() 	{maakRaster(this.width);
+							 toonPion(0, 0);
+							},	
 	  
 	  properties: {
 		width:{
