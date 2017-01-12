@@ -14,22 +14,27 @@ public class SchaakStuk {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	
-//	@Column(nullable=false)
-//	private Type type;
+
+	@Column(nullable=false)
+	private String type;
 	
 	@Column(nullable=false)
 	private String color;
 	@Column(nullable=false)
-	private boolean onBoard;
+	private Boolean onBoard;
 	@ElementCollection
 	private List<Integer> coords;
-	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getColor() {
 		return color;
@@ -37,10 +42,10 @@ public class SchaakStuk {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public boolean isOnBoard() {
+	public Boolean getOnBoard() {
 		return onBoard;
 	}
-	public void setOnBoard(boolean onBoard) {
+	public void setOnBoard(Boolean onBoard) {
 		this.onBoard = onBoard;
 	}
 	public List<Integer> getCoords() {
@@ -50,5 +55,6 @@ public class SchaakStuk {
 		this.coords = coords;
 	}
 	
+
 
 }
