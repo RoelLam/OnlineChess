@@ -12,12 +12,8 @@
   </template>
 
   <script>
-	var iets = '500';
-  	function maakRaster(w) {
-		var h; 
+	function maakRaster(w) {
 		var schaakbord = document.getElementById("poging2");
-		var links = 480;
-		var boven = 130;
 		var stap = (w-5)*0.125;
 		for(i = 0; i<8; i++){
 			for(j=0; j<8; j++){
@@ -35,12 +31,22 @@
 			}
 		}
 	}
+	function toonPion(i, j){
+		var div = document.getElementById("Vak" + i + "" + j);
+		var image = document.createElement("img");
+		image.src = '/Bord/Rook_white.png';
+		image.height = '80';
+		image.width = '80';
+		div.appendChild(image);
+	}
   
 
     Polymer({
       is: 'raster-element',
 	  
-	  attached: function() {maakRaster(this.width) },	
+	  attached: function() 	{maakRaster(this.width);
+							 toonPion(0, 0);
+							},	
 	  
 	  properties: {
 		width:{
