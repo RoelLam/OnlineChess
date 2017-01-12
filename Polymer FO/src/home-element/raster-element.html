@@ -1,0 +1,59 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+
+<dom-module id="raster-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+	
+  </template>
+
+  <script>
+	var iets = '500';
+  	function maakRaster(w) {
+		var h; 
+		var schaakbord = document.getElementById("poging2");
+		var links = 480;
+		var boven = 130;
+		var stap = (w-5)*0.125;
+		for(i = 0; i<8; i++){
+			for(j=0; j<8; j++){
+				var div = document.createElement("div");
+				div.id="Vak" + i + "" + j;
+				// div.style.center="true";
+				div.style.position="relative";
+				div.style.width=stap + "px";
+				div.style.height=stap + "px";
+				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
+				div.style.top=-w -j*stap -7*i*stap + "px";
+				div.innerHTML="Hello ";
+				
+				schaakbord.appendChild(div);
+			}
+		}
+	}
+  
+
+    Polymer({
+      is: 'raster-element',
+	  
+	  attached: function() {maakRaster(this.width) },	
+	  
+	  properties: {
+		width:{
+			type:String,
+		}
+	  },
+	  
+
+		
+    });
+
+
+
+  </script>
+  
+</dom-module>

@@ -1,0 +1,43 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-image/iron-image.html">
+
+<dom-module id="schaakbord-element">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+	<div style="margin-top: 100px; margin-bottom:auto;"id="poging">
+		<center>
+			<div id="poging2"><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Chess_Board.svg"></iron-image></div>
+			<content></content>
+		</center>
+	</div>
+  </template>
+
+  <script>
+	var iets = 0.75*window.screen.availHeight;
+    Polymer({
+      is: 'schaakbord-element',
+
+      properties: {
+        width: {
+          type: String,
+          value: iets,
+		  readOnly: true,
+		  notify: true
+        },
+		height: {
+          type: String,
+          value: iets,
+		  readOnly: true,
+		  notify: true
+        },
+		
+      },
+
+    });
+  </script>
+  
+</dom-module>
