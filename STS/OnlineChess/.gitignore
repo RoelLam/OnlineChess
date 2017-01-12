@@ -22,3 +22,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+STS/.metadata
+STS/RemoteSystemsTempFiles
+STS/Servers
