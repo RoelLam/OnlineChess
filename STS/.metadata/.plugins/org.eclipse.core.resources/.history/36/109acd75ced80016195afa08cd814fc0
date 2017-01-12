@@ -1,0 +1,27 @@
+package com.example.repository;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.database.SchaakStuk;
+import com.example.database.SchaakVeld;
+import com.example.database.Bord;
+
+@Repository
+public interface DataManipulatie extends JpaRepository<SchaakVeld,Long> {
+	List<SchaakVeld> findAll();
+}
+
+/*
+interface SchaakStukManipulatie extends JpaRepository<SchaakStuk,Long>{
+	List<SchaakStuk> findAll();
+}
+
+interface SchaakVeldManipulatie extends JpaRepository<SchaakVeld,Long>{
+	List<SchaakVeld> findAll();
+}
+
+interface BordManipulatie extends JpaRepository<Bord,Long>{
+	List<Bord> findAll();
+}
+*/
