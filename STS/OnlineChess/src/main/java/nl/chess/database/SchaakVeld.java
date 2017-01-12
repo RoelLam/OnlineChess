@@ -1,0 +1,53 @@
+package nl.chess.database;
+
+
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
+public class SchaakVeld {
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long id;
+	@Column(nullable=false)
+	private String vakNaam;
+	@OneToOne
+	private SchaakStuk stuk;
+	@ElementCollection(fetch=FetchType.EAGER)
+	private List<Integer> coords;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getVakNaam() {
+		return vakNaam;
+	}
+	public void setVakNaam(String vakNaam) {
+		this.vakNaam = vakNaam;
+	}
+	public SchaakStuk getStuk() {
+		return stuk;
+	}
+	public void setStuk(SchaakStuk stuk) {
+		this.stuk = stuk;
+	}
+	public List<Integer> getCoords() {
+		return coords;
+	}
+	public void setCoords(List<Integer> coords) {
+		this.coords = coords;
+	}
+
+}
