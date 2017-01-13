@@ -5,9 +5,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class SchaakStuk {
@@ -18,12 +23,16 @@ public class SchaakStuk {
 	@Column(nullable=false)
 	private String type;
 	
-	@Column(nullable=false)
-	private String color;
+	@Enumerated(EnumType.STRING)
+	private ChessColor color;
 	@Column(nullable=false)
 	private Boolean onBoard;
 	@ElementCollection
 	private List<Integer> coords;
+	@ManyToOne
+	@JsonIgnore
+	private Bord bord;
+	
 	public Long getId() {
 		return id;
 	}
@@ -36,10 +45,10 @@ public class SchaakStuk {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getColor() {
+	public ChessColor getColor() {
 		return color;
 	}
-	public void setColor(String color) {
+	public void setColor(ChessColor color) {
 		this.color = color;
 	}
 	public Boolean getOnBoard() {
@@ -54,7 +63,10 @@ public class SchaakStuk {
 	public void setCoords(List<Integer> coords) {
 		this.coords = coords;
 	}
-	
-
-
+	public Bord getBord() {
+		return bord;
+	}
+	public void setBord(Bord bord) {
+		this.bord = bord;
+	}
 }

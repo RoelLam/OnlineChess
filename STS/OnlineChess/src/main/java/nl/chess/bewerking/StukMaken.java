@@ -4,36 +4,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import nl.chess.database.Bord;
+import nl.chess.database.ChessColor;
+import nl.chess.database.ChessType;
 import nl.chess.database.SchaakStuk;
+import nl.chess.repository.BordManipulatie;
 import nl.chess.repository.StukManipulatie;
-import nl.chess.repository.VeldManipulatie;
 
 @RestController
+@RequestMapping("zetten")
 public class StukMaken {
 	@Autowired
 	private StukManipulatie dataStuk;
 	@Autowired
-	private VeldManipulatie dataVeld;
+	private BordManipulatie dataBord;
 	
-	@RequestMapping("stukmaken")
-	public SchaakStuk createStuk(){
-		SchaakStuk stuk = new SchaakStuk();
-		List<Integer> coords = new ArrayList<Integer>();;
-		coords.add(1);coords.add(2);
-		stuk.setType("pion");
-		stuk.setColor("white");
-		stuk.setCoords(coords);
-		stuk.setOnBoard(true);		
+	@RequestMapping("bordmaken")
+	public Bord createBord(){
+		Bord b = new Bord();
+		b = dataBord.save(b);
 		
-		if(stuk.getOnBoard()){
-			
+		for (ChessColor color : ChessColor.values()) {
+			for (ChessType schaakstukType : ChessType.values()) {
+				for (Integer kolom : schaakstukType.getKolommen()) {
+					SchaakStuk stuk = new SchaakStuk();
+					stuk.setBord(b);
+					stuk.setType(schaakstukType.name());
+					stuk.setColor(color);
+					stuk.setOnBoard(true);
+					List<Integer> coordinaten = schaakstukType.getCoordinaten(color, kolom);
+					stuk.setCoords(coordinaten);
+					stuk = dataStuk.save(stuk);
+					b.getSchaakStukken().add(stuk);
+					b = dataBord.save(b);
+				}
+			}
 		}
-		
-		
-		return dataStuk.save(stuk);
+		return b;
 	}
 	
+	@RequestMapping("zet/{coordinaten}")
+	public Bord zet(@ModelAttribute SchaakStuk stuk, @PathVariable List<Integer> coordinaten) {
+		stuk.setCoords(coordinaten);
+		return dataStuk.save(stuk).getBord();
+	}
+		
+	
+	@RequestMapping("verander/{type}")
+	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable String type) {
+		pion.setType(type);
+		return dataStuk.save(pion);		
+	}	
 }

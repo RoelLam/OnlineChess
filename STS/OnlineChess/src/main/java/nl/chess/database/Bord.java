@@ -1,8 +1,10 @@
 package nl.chess.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +15,8 @@ public class Bord {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
-	@OneToMany
-	private List<SchaakVeld> velden;
+	@OneToMany(mappedBy="bord", fetch=FetchType.EAGER)
+	private List<SchaakStuk> schaakStukken = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -22,11 +24,10 @@ public class Bord {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public List<SchaakVeld> getVelden() {
-		return velden;
+	public List<SchaakStuk> getSchaakStukken() {
+		return schaakStukken;
 	}
-	public void setVelden(List<SchaakVeld> velden) {
-		this.velden = velden;
-	}		
-	
+	public void setSchaakStukken(List<SchaakStuk> schaakStukken) {
+		this.schaakStukken = schaakStukken;
+	}
 }
