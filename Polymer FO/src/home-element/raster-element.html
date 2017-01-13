@@ -1,6 +1,8 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-image/iron-image.html">
 <link rel="import" href="/src/home-element/icon-set-schaakstukken-element.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/iron-iconset/iron-iconset.html">
 
 <dom-module id="raster-element">
   <template>
@@ -9,7 +11,7 @@
         display: block;
       }
     </style>
-	
+	<icon-set-schaakstukken-element></icon-set-schaakstukken-element>
   </template>
 
   <script>
@@ -33,13 +35,15 @@
 		}
 	}
 	function toonPion(i, j){
-		var div = document.getElementById("Vak" + i + "" + j);
-
-		var image = document.createElement("img");
-		//image.src = '/Bord/Board_chess.png';
-		image.height = '80';
-		image.width = '80';
-		div.appendChild(image);
+		for(k = 0; k<8;k++){
+			var div_voor_pion = document.getElementById("Vak" + i + "" + k);
+			div_voor_pion.innerHTML = "";		
+			var icon = document.createElement('iron-icon');
+			icon.setAttribute('icon', 'de_schaakstukken:pawn_white');
+			icon.setAttribute('width', '80px');
+			icon.setAttribute('height', '80px');
+			div_voor_pion.appendChild(icon);
+		}
 	}
   
 
@@ -47,7 +51,8 @@
       is: 'raster-element',
 	  
 	  attached: function() 	{maakRaster(this.width);
-							 toonPion(0, 0);
+							 toonPion(1, 0);
+							 
 							},	
 	  
 	  properties: {

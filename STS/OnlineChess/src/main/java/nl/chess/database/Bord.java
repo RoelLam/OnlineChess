@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 @Entity
 public class Bord {
+	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
