@@ -15,6 +15,7 @@
   </template>
 
   <script>
+  
 	function maakRaster(w) {
 		var schaakbord = document.getElementById("poging2");
 		var stap = (w-5)*0.125;
@@ -28,9 +29,10 @@
 				div.style.height=stap + "px";
 				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
 				div.style.top=-w -j*stap -7*i*stap + "px";
-				div.innerHTML="Hello ";
+				div.innerHTML="Locatie Stuk";
 				
 				schaakbord.appendChild(div);
+				
 			}
 		}
 	}
@@ -46,13 +48,12 @@
 		}
 	}
   
-
     Polymer({
       is: 'raster-element',
 	  
-	  attached: function() 	{maakRaster(this.width);
-							 toonStuk('pawn', 'white', 1, 0);
-							 
+	  attached: function() 	{	maakRaster(this.width);
+								toonStuk('pawn', 'white', 6, 0);
+								toonStuk('pawn', 'black', 1, 0);
 							},	
 	  
 	  properties: {
