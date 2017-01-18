@@ -1,7 +1,5 @@
 package nl.chess;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +15,6 @@ import nl.chess.database.Bord;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = OnlineChessApplication.class)
 public class RepositoryTest {
-	
-	@Autowired
-	private RepositoryTest borden;
 	
 	@Test
 	public void testBord(){
