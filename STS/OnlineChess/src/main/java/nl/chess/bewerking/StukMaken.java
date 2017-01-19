@@ -1,12 +1,12 @@
 package nl.chess.bewerking;
 
-import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,10 +51,10 @@ public class StukMaken {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8081")
-	@RequestMapping("zet")
-	public String zet(String coordinaten) {
-		System.out.println(coordinaten);
-		return coordinaten;
+	@RequestMapping(value = "zet", method=RequestMethod.POST)
+	public String zet(@RequestBody String fieldOne) {
+		System.out.println(fieldOne);
+		return fieldOne;
 		// stuk.setCoords(coordinaten);
 		// return dataStuk.save(stuk).getBord();
 	}
