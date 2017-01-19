@@ -1,15 +1,12 @@
 package nl.chess.bewerking;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import nl.chess.database.Bord;
@@ -27,6 +24,7 @@ public class StukMaken {
 	@Autowired
 	private BordManipulatie dataBord;
 	
+	@CrossOrigin("http://localhost:8081")
 	@RequestMapping("bordmaken")
 	public Bord createBord(){
 		Bord b = new Bord();
@@ -41,7 +39,7 @@ public class StukMaken {
 					stuk.setColor(color);
 					stuk.setOnBoard(true);
 					List<Integer> coordinaten = schaakstukType.getCoordinaten(color, kolom);
-					stuk.getCoords().addAll(coordinaten);
+					stuk.setCoords(coordinaten);
 					stuk = dataStuk.save(stuk);
 					b.getSchaakStukken().add(stuk);
 					b = dataBord.save(b);
@@ -51,27 +49,13 @@ public class StukMaken {
 		return b;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8081")
-	@RequestMapping(value = "zet2", method=RequestMethod.POST)
-	public String zet2(@RequestBody String fieldOne) {
-		System.out.println(fieldOne);
-		return fieldOne;
-		// stuk.setCoords(coordinaten);
-		// return dataStuk.save(stuk).getBord();
-	}		
-
-	@RequestMapping("zet/{schaakstukId}/{x}/{y}")
-	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
-		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
-		stuk.getCoords().clear();
-		dataStuk.save(stuk);
-		
-		stuk.getCoords().add(x);
-		stuk.getCoords().add(y);
-		
+	@RequestMapping("zet/{coordinaten}")
+	public Bord zet(@ModelAttribute SchaakStuk stuk, @PathVariable List<Integer> coordinaten) {
+		stuk.setCoords(coordinaten);
 		return dataStuk.save(stuk).getBord();
 	}
 		
+	
 	@RequestMapping("verander/{type}")
 	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable String type) {
 		pion.setType(type);
