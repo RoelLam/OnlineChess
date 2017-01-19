@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,12 +51,15 @@ public class StukMaken {
 		return b;
 	}
 	
-	@RequestMapping("zet/{coordinaten}")
-	public Bord zet(@RequestBody SchaakStuk stuk, @PathVariable List<Integer> coordinaten) {
-		stuk.setCoords(coordinaten);
-		return dataStuk.save(stuk).getBord();
-	}
-		
+	@CrossOrigin(origins = "http://localhost:8081")
+	@RequestMapping(value = "zet2", method=RequestMethod.POST)
+	public String zet2(@RequestBody String fieldOne) {
+		System.out.println(fieldOne);
+		return fieldOne;
+		// stuk.setCoords(coordinaten);
+		// return dataStuk.save(stuk).getBord();
+	}		
+
 	@RequestMapping("zet/{schaakstukId}/{x}/{y}")
 	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);

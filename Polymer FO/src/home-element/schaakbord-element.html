@@ -16,10 +16,16 @@
 			<content></content>
 		</center>
 	</div>
+	<div id="send">
+		<iron-ajax id="zet" method="POST" url="http://localhost:8080/zetten/zet" handle-as="text">
+		</iron-ajax>
+	</div>
   </template>
 
   <script>
 	var iets = 0.75*window.screen.availHeight;
+	var select = false;
+	var field_one; var field_two;
     Polymer({
       is: 'schaakbord-element',
 
@@ -36,9 +42,27 @@
 		  readOnly: true,
 		  notify: true
         },
-		
-      },
+	  },	 
+		 
+	  listeners: {
+		'tap':'selectPiece'
+	  },
+	  
+	  selectPiece: function(e){
+		var field = e.target.id;
+		if(!select){		
+			field_one = field;
+			alert("field one " + field_one);
+		}	else {
+			field_two = field;
+			alert("field one " + field_one + "\n field two " + field_two);
+			this.$.zet.body= field_one;
+			this.$.zet.generateRequest();
+		}
+		select = !select;
 
+	  },
+		
     });
   </script>
   
