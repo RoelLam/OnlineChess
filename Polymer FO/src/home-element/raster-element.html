@@ -37,21 +37,21 @@
 		}
 	}
 	function startSpel(array){
+	console.log('start spel!');
 		for(var i =0; i<array.length; i++){
 			toonStuk(array[i].type, array[i].color, array[i].id, array[i].coords[0], array[i].coords[1]);
 		}
 	}
 	
-	function toonStuk(type, color, id, i, j){
+function toonStuk(type, color, id, i, j){
 			var div_voor_stuk = document.getElementById("Vak" + i + "" + j);
 			div_voor_stuk.innerHTML = "";		
-
 			var icon = document.createElement('iron-icon');
 			icon.setAttribute('icon', 'de_schaakstukken:' + type + '_' + color + '');
 			icon.setAttribute('width', '80px');
 			icon.setAttribute('height', '80px');
 			icon.setAttribute('id',id);
-			icon.setAttribute('class',"icoon");
+
 			div_voor_stuk.appendChild(icon);
 	}
 	
@@ -82,9 +82,5 @@
 
 		
     });
-
-
-
   </script>
-  
 </dom-module>
