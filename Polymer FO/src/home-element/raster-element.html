@@ -30,6 +30,7 @@
 				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
 				div.style.top=-w -j*stap -7*i*stap + "px";
 				div.innerHTML="Locatie Stuk";
+	//			div.event.click="clicked"
 				
 				schaakbord.appendChild(div);
 				
@@ -39,7 +40,7 @@
 	function toonStuk(type, color, i, j){
 		for(k = 0; k<8;k++){
 			var div_voor_pion = document.getElementById("Vak" + i + "" + k);
-			div_voor_pion.innerHTML = "";		
+			div_voor_pion.innerHTML = "";	
 			var icon = document.createElement('iron-icon');
 			icon.setAttribute('icon', 'de_schaakstukken:' + type + '_' + color + '');
 			icon.setAttribute('width', '80px');
