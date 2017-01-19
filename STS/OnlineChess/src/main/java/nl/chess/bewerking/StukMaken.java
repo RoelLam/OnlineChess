@@ -60,7 +60,8 @@ public class StukMaken {
 		// return dataStuk.save(stuk).getBord();
 	}		
 
-	@RequestMapping("zet/{schaakstukId}/{x}/{y}")
+	@CrossOrigin(origins = "http://localhost:8081")
+	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
 	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
 		stuk.getCoords().clear();

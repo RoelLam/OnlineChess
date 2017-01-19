@@ -31,25 +31,28 @@
 				div.style.height=stap + "px";
 				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
 				div.style.top=-w -j*stap -7*i*stap + "px";
+				div.setAttribute('class',"veld");
 				schaakbord.appendChild(div);
 			}
 		}
 	}
 	function startSpel(array){
 		for(var i =0; i<array.length; i++){
-			toonStuk(array[i].type, array[i].color, array[i].coords[0], array[i].coords[1]);
+			toonStuk(array[i].type, array[i].color, array[i].id, array[i].coords[0], array[i].coords[1]);
 		}
 	}
 	
-	function toonStuk(type, color, i, j){
-			var div_voor_pion = document.getElementById("Vak" + i + "" + j);
-			div_voor_pion.innerHTML = "";		
+	function toonStuk(type, color, id, i, j){
+			var div_voor_stuk = document.getElementById("Vak" + i + "" + j);
+			div_voor_stuk.innerHTML = "";		
 
 			var icon = document.createElement('iron-icon');
 			icon.setAttribute('icon', 'de_schaakstukken:' + type + '_' + color + '');
 			icon.setAttribute('width', '80px');
 			icon.setAttribute('height', '80px');
-			div_voor_pion.appendChild(icon);
+			icon.setAttribute('id',id);
+			icon.setAttribute('class',"icoon");
+			div_voor_stuk.appendChild(icon);
 	}
 	
     Polymer({
