@@ -1,13 +1,11 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
 
 <dom-module id="nieuw-bord-opvragen-element">
-  <template>
-	<div>
-		<iron-ajax id="xhr" auto url="http://localhost:8080/nieuwbord" handle-as="json" on-response="handleResponse">	
-		
-		</iron-ajax>
-	</div>
+  <template id = "template" is="dom-bind">
+		<paper-button raised on-tap="handleTap">Restart!</paper-button>
+		<iron-ajax id="xhr" auto url="http://localhost:8080/nieuwbord" handle-as="json" on-response="handleResponse"></iron-ajax>
   </template>
 
   <script>
@@ -18,7 +16,10 @@
 			const resp = e.detail.response;
 			this.data = resp.schaakStukken;
 		},
-		
+		handleTap: function(e){
+			var t = document.querySelector('#xhr');
+			xhr.generateRequest();
+		},
       properties: {
         test_width: {
           type: String,

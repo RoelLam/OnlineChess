@@ -42,13 +42,13 @@
 	}
 	
 	function toonStuk(type, color, i, j){
-			var div_voor_pion = document.getElementById("Vak" + i + "" + j);
-			div_voor_pion.innerHTML = "";		
+			var div_voor_stuk = document.getElementById("Vak" + i + "" + j);
+			div_voor_stuk.innerHTML = "";		
 			var icon = document.createElement('iron-icon');
 			icon.setAttribute('icon', 'de_schaakstukken:' + type + '_' + color + '');
 			icon.setAttribute('width', '80px');
 			icon.setAttribute('height', '80px');
-			div_voor_pion.appendChild(icon);
+			div_voor_stuk.appendChild(icon);
 	}
 	
     Polymer({
