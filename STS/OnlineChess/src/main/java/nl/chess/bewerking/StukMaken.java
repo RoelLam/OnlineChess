@@ -1,5 +1,6 @@
 package nl.chess.bewerking;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class StukMaken {
 					stuk.setColor(color);
 					stuk.setOnBoard(true);
 					List<Integer> coordinaten = schaakstukType.getCoordinaten(color, kolom);
-					stuk.setCoords(coordinaten);
+					stuk.getCoords().addAll(coordinaten);
 					stuk = dataStuk.save(stuk);
 					b.getSchaakStukken().add(stuk);
 					b = dataBord.save(b);
@@ -51,15 +52,26 @@ public class StukMaken {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8081")
-	@RequestMapping(value = "zet", method=RequestMethod.POST)
-	public String zet(@RequestBody String fieldOne) {
+	@RequestMapping(value = "zet2", method=RequestMethod.POST)
+	public String zet2(@RequestBody String fieldOne) {
 		System.out.println(fieldOne);
 		return fieldOne;
 		// stuk.setCoords(coordinaten);
 		// return dataStuk.save(stuk).getBord();
+	}		
+
+	@RequestMapping("zet/{schaakstukId}/{x}/{y}")
+	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
+		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+		stuk.getCoords().clear();
+		dataStuk.save(stuk);
+		
+		stuk.getCoords().add(x);
+		stuk.getCoords().add(y);
+		
+		return dataStuk.save(stuk).getBord();
 	}
 		
-	
 	@RequestMapping("verander/{type}")
 	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable String type) {
 		pion.setType(type);
