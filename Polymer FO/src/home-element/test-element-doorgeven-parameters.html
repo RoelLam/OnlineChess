@@ -3,33 +3,23 @@
 
 <dom-module id="test-element-doorgeven-parameters">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-	</style>
-	<div id ="hierKomtDeJSON">
-		<iron-ajax id="xhr" auto url="http://localhost:8080/nieuwbord" handle-as="json" on-response="handleResponse">	
-		
-		</iron-ajax>
-	</div>
-	<div>
-		
-	</div>
+
   </template>
 
   <script>
+	
     Polymer({
       is: 'test-element-doorgeven-parameters',
-		handleResponse: function(e){
-			const resp = e.detail.response;
-			this.$.hierKomtDeJSON.innerHTML = JSON.stringify(resp,null, '');
-		},
-      properties: {
+	  
+	properties: {
         test_width: {
           type: String,
         },
-      },
+		data: {
+			type: Array,
+			notify: true
+			},
+		},
     });
 	
   </script>

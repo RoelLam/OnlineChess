@@ -1,0 +1,35 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="nieuw-bord-opvragen-element">
+  <template>
+	<div>
+		<iron-ajax id="xhr" auto url="http://localhost:8080/nieuwbord" handle-as="json" on-response="handleResponse">	
+		
+		</iron-ajax>
+	</div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'nieuw-bord-opvragen-element',
+	  
+		handleResponse: function(e){
+			const resp = e.detail.response;
+			this.data = resp.schaakStukken;
+		},
+		
+      properties: {
+        test_width: {
+          type: String,
+        },
+		data: {
+			type: Array,
+			notify: true
+			},
+		},
+    });
+	
+  </script>
+  
+</dom-module>
