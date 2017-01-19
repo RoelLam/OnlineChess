@@ -1,5 +1,6 @@
 package nl.chess.database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -26,9 +27,9 @@ public class SchaakStuk {
 	@Enumerated(EnumType.STRING)
 	private ChessColor color;
 	@Column(nullable=false)
-	private Boolean onBoard;
+	private Boolean onBoard = Boolean.TRUE;
 	@ElementCollection
-	private List<Integer> coords;
+	private List<Integer> coords = new ArrayList<>();
 	@ManyToOne
 	@JsonIgnore
 	private Bord bord;
