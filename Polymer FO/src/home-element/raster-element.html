@@ -3,6 +3,7 @@
 <link rel="import" href="/src/home-element/icon-set-schaakstukken-element.html">
 <link rel="import" href="/bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="/bower_components/iron-iconset/iron-iconset.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="raster-element">
   <template>
@@ -12,6 +13,7 @@
       }
     </style>
 	<icon-set-schaakstukken-element></icon-set-schaakstukken-element>
+	<nieuw-bord-opvragen-element data="{{bordGegevens}}"></nieuw-bord-opvragen-element>
   </template>
 
   <script>
@@ -29,36 +31,47 @@
 				div.style.height=stap + "px";
 				div.style.left=-w*0.5 + j*stap +0.5*stap + "px";
 				div.style.top=-w -j*stap -7*i*stap + "px";
-				div.innerHTML="Locatie Stuk";
-				
 				schaakbord.appendChild(div);
-				
 			}
 		}
 	}
+	function startSpel(array){
+		for(var i =0; i<array.length; i++){
+			toonStuk(array[i].type, array[i].color, array[i].coords[0], array[i].coords[1]);
+		}
+	}
+	
 	function toonStuk(type, color, i, j){
-		for(k = 0; k<8;k++){
-			var div_voor_pion = document.getElementById("Vak" + i + "" + k);
+			var div_voor_pion = document.getElementById("Vak" + i + "" + j);
 			div_voor_pion.innerHTML = "";		
 			var icon = document.createElement('iron-icon');
 			icon.setAttribute('icon', 'de_schaakstukken:' + type + '_' + color + '');
 			icon.setAttribute('width', '80px');
 			icon.setAttribute('height', '80px');
 			div_voor_pion.appendChild(icon);
-		}
 	}
-  
+	
     Polymer({
       is: 'raster-element',
 	  
+	  listeners:{
+		'bord-gegevens-changed' : 'bordVernieuwen',
+	  },
+	  
 	  attached: function() 	{	maakRaster(this.width);
-								toonStuk('pawn', 'white', 6, 0);
-								toonStuk('pawn', 'black', 1, 0);
 							},	
+	  
+	  bordVernieuwen: function(e){
+		startSpel(this.bordGegevens);
+	  },
 	  
 	  properties: {
 		width:{
 			type:String,
+		},
+		bordGegevens:{
+			type: Array,
+			notify: true
 		}
 	  },
 	  
