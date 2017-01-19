@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import nl.chess.database.Bord;
@@ -49,9 +50,16 @@ public class StukMaken {
 		return b;
 	}
 	
-	@RequestMapping("zet/{coordinaten}")
-	public Bord zet(@ModelAttribute SchaakStuk stuk, @PathVariable List<Integer> coordinaten) {
-		stuk.setCoords(coordinaten);
+	@CrossOrigin(origins = "http://localhost:8081")
+	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
+	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
+		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+		stuk.getCoords().clear();
+		dataStuk.save(stuk);
+		
+		stuk.getCoords().add(x);
+		stuk.getCoords().add(y);
+
 		return dataStuk.save(stuk).getBord();
 	}
 		

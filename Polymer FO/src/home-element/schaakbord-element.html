@@ -17,15 +17,14 @@
 		</center>
 	</div>
 	<div id="send">
-		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet" handle-as="text">
-		</iron-ajax>
+		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/"></iron-ajax>
 	</div>
   </template>
 
   <script>
 	var iets = 0.75*window.screen.availHeight;
 	var select = false;
-	var field_one; var field_two;
+	var schaakstukId; var field;
     Polymer({
       is: 'schaakbord-element',
 
@@ -49,19 +48,29 @@
 	  },
 	  
 	  selectPiece: function(e){
-		var field = e.target.id;
-		if(!select){		
-			field_one = field;
-			alert("field one " + field_one);
-		}	else {
-			field_two = field;
-			alert("field one " + field_one + "\n field two " + field_two);
-			this.$.zet.body= field_one;
+		
+		
+		if(!select){
+			if(e.target.className !="veld"){
+				schaakstukId = e.target.id;
+				alert("schaakstukId " + schaakstukId);
+				select = !select;
+			}
+		}else{
+			if(e.target.className !="veld"){
+				field = e.target.parentNode.id;
+			}else {
+				field = e.target.id;
+			}
+			
+			select = !select;
+			
+			alert("field " + field);
+			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + field.charAt(3) + "/" + field.charAt(4);
 			this.$.zet.generateRequest();
-		}
-		select = !select;
-
-	  },
+		}		
+		
+	 },
 		
     });
   </script>
