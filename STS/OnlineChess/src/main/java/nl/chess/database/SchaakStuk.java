@@ -1,6 +1,7 @@
 package nl.chess.database;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,8 +22,8 @@ public class SchaakStuk {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 
-	@Column(nullable=false)
-	private String type;
+	@Enumerated(EnumType.STRING)
+	private ChessType type;
 	
 	@Enumerated(EnumType.STRING)
 	private ChessColor color;
@@ -40,10 +41,10 @@ public class SchaakStuk {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getType() {
+	public ChessType getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(ChessType type) {
 		this.type = type;
 	}
 	public ChessColor getColor() {
@@ -70,4 +71,9 @@ public class SchaakStuk {
 	public void setBord(Bord bord) {
 		this.bord = bord;
 	}
+	
+	public boolean magZetten(Integer x, Integer y){
+		return type.kanNaar(coords, Arrays.asList(x, y), color);
+	}
+	
 }

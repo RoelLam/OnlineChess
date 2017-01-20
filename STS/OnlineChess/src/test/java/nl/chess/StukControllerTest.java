@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import nl.chess.bewerking.StukMaken;
 import nl.chess.database.Bord;
+import nl.chess.database.ChessType;
 import nl.chess.database.SchaakStuk;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -24,8 +25,8 @@ public class StukControllerTest {
 		SchaakStuk pion = bord.getSchaakStukken().get(0);
 		pion.setCoords(Arrays.asList(2,7));
 		// controle of { pion } koningin wordt
-		SchaakStuk shouldBeQueen = stukMaken.changePiece(pion, "queen");
+		SchaakStuk shouldBeQueen = stukMaken.changePiece(pion, ChessType.QUEEN);
 		
-		Assert.assertEquals("Pion moet koningin zijn geworden",  "queen", shouldBeQueen.getType());
+		Assert.assertEquals("Pion moet koningin zijn geworden",  ChessType.QUEEN, shouldBeQueen.getType());
 	}
 }
