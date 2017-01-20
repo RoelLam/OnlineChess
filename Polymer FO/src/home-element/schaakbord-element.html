@@ -65,9 +65,17 @@
 			
 			select = !select;
 			
-			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + endField.charAt(3) + "/" + endField.charAt(4);
+			var xcoord = endField.charAt(3);
+			var ycoord = endField.charAt(4);
+			
+			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + xcoord + "/" + ycoord;
 			this.$.zet.generateRequest();
+			
+			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
+			var typeColor = iconName.substr(17,iconName.length - 1); 
+			typeColor = typeColor.split("_");
 			document.getElementById(startField).innerHTML="";
+			toonStuk(typeColor[0],typeColor[1],schaakstukId,xcoord,ycoord);
 			
 			
 			
