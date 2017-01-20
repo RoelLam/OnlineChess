@@ -17,7 +17,7 @@
 		</center>
 	</div>
 	<div id="send">
-		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/"></iron-ajax>
+		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/" on-response="handleZet" handle-as="text" type="text"></iron-ajax>
 	</div>
   </template>
 
@@ -25,6 +25,7 @@
 	var iets = 0.75*window.screen.availHeight;
 	var select = false;
 	var schaakstukId; var startField; var endField; 
+	var xcoord; var ycoord;
     Polymer({
       is: 'schaakbord-element',
 
@@ -47,6 +48,18 @@
 		'tap':'selectPiece'
 	  },
 	  
+	  handleZet: function(e){
+		var resp = e.detail.response;
+		console.log(resp);
+		if(resp=="true"){
+			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
+			var typeColor = iconName.substr(17,iconName.length - 1); 
+			typeColor = typeColor.split("_");
+			document.getElementById(startField).innerHTML="";
+			toonStuk(typeColor[0],typeColor[1],schaakstukId,xcoord,ycoord);
+		}	  
+	  },
+	  
 	  selectPiece: function(e){
 		
 		
@@ -65,19 +78,11 @@
 			
 			select = !select;
 			
-			var xcoord = endField.charAt(3);
-			var ycoord = endField.charAt(4);
+			xcoord = endField.charAt(3);
+			ycoord = endField.charAt(4);
 			
 			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + xcoord + "/" + ycoord;
-			var hetMag = this.$.zet.generateRequest();
-
-			if(true){
-				var iconName = document.getElementById(schaakstukId).getAttribute('icon');
-				var typeColor = iconName.substr(17,iconName.length - 1); 
-				typeColor = typeColor.split("_");
-				document.getElementById(startField).innerHTML="";
-				toonStuk(typeColor[0],typeColor[1],schaakstukId,xcoord,ycoord);
-			}
+			this.$.zet.generateRequest();
 		}		
 		
 	 },

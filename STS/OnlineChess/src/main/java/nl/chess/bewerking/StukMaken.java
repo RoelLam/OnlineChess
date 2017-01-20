@@ -52,7 +52,7 @@ public class StukMaken {
 
 	@CrossOrigin("http://localhost:8081")
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
-	public Boolean zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
+	public String zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
 		Boolean hetKan = stuk.magZetten(x,y);
 		
@@ -67,7 +67,7 @@ public class StukMaken {
 		}
 		
 	
-		return hetKan;
+		return hetKan.toString();
 	}
 		
 	

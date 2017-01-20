@@ -43,8 +43,6 @@ public enum ChessType {
 		boolean hetKan = false;
 		Integer xverschil = currentCords.get(0)-newCords.get(0);
 		Integer yverschil = currentCords.get(1) - newCords.get(1);
-		System.out.println(hetKan);
-		
 		
 		if (richting == Richting.RECHT || richting == Richting.BEIDEN){
 			
@@ -62,7 +60,7 @@ public enum ChessType {
 			if (Math.abs(xverschil) == Math.abs(yverschil)){
 				if(eenPlaats && xverschil == 1){
 					hetKan=true;
-				}else if(!eenPlaats && xverschil>0){
+				}else if(!eenPlaats && Math.abs(xverschil)>0){
 					hetKan=true;
 				}
 
