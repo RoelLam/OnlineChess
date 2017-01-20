@@ -24,7 +24,7 @@
   <script>
 	var iets = 0.75*window.screen.availHeight;
 	var select = false;
-	var schaakstukId; var field;
+	var schaakstukId; var startField; var endField; 
     Polymer({
       is: 'schaakbord-element',
 
@@ -54,18 +54,23 @@
 			if(e.target.className !="veld"){
 				schaakstukId = e.target.id;
 				select = !select;
+				startField = e.target.parentNode.id;
 			}
 		}else{
 			if(e.target.className !="veld"){
-				field = e.target.parentNode.id;
+				endField = e.target.parentNode.id;
 			}else {
-				field = e.target.id;
+				endField = e.target.id;
 			}
 			
 			select = !select;
 			
-			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + field.charAt(3) + "/" + field.charAt(4);
+			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + endField.charAt(3) + "/" + endField.charAt(4);
 			this.$.zet.generateRequest();
+			document.getElementById(startField).innerHTML="";
+			
+			
+			
 		}		
 		
 	 },
