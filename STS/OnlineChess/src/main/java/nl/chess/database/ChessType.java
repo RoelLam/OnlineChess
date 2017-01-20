@@ -10,11 +10,11 @@ public enum ChessType {
 			Boolean hetKan = false;
 			Integer xverschil = newCords.get(0)- currentCords.get(0);
 			Integer yverschil = newCords.get(1)- currentCords.get(1);
-			Integer richting = color == ChessColor.BLACK ? 1 : -1;
+			Integer kleur = color == ChessColor.BLACK ? 1 : -1;
 			
-			if(xverschil*richting == 1){
+			if(xverschil*kleur == 1){
 				hetKan = true;
-			}else if(xverschil*richting == 2 && (currentCords.get(0)==richting || (currentCords.get(0)==6 && richting==-1))){
+			}else if(xverschil*kleur == 2 && (currentCords.get(0)==kleur || (currentCords.get(0)==6 && kleur==-1))){
 				hetKan = true;
 			}
 						
@@ -54,6 +54,7 @@ public enum ChessType {
 		boolean hetKan = false;
 		Integer xverschil = currentCords.get(0)-newCords.get(0);
 		Integer yverschil = currentCords.get(1) - newCords.get(1);
+		
 		
 		if (richting == Richting.RECHT || richting == Richting.BEIDEN){
 			
