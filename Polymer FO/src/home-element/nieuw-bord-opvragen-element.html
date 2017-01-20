@@ -6,7 +6,6 @@
 <dom-module id="nieuw-bord-opvragen-element">
   <template id = "template" is="dom-bind">
 		<paper-button raised on-tap="handleTap">Restart!</paper-button>
-		<iron-localstorage id="test_cookie"></iron-localstorage>
 		<iron-ajax id="xhr" auto url="http://localhost:8080/zetten/bordmaken" handle-as="json" on-response="handleResponse"></iron-ajax>
   </template>
 
@@ -20,7 +19,6 @@
 		},
 		handleTap: function(e){
 			xhr.generateRequest();
-			doeDit();
 		},
       properties: {
         test_width: {
