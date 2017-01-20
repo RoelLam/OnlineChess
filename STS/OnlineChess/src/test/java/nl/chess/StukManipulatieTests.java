@@ -11,6 +11,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import nl.chess.database.ChessColor;
+import nl.chess.database.ChessType;
 import nl.chess.database.SchaakStuk;
 import nl.chess.repository.StukManipulatie;
 
@@ -23,7 +24,7 @@ public class StukManipulatieTests {
 	
 	@Test
 	public void testOpslaanEnLadenVanSchaakstuk() {
-		SchaakStuk stuk = newSchaakStuk(ChessColor.BLACK, "no type", true);
+		SchaakStuk stuk = newSchaakStuk(ChessColor.BLACK, ChessType.QUEEN, true);
 		assertNull(stuk.getId());
 		stuk = manipulatie.save(stuk);
 		assertNotNull(stuk.getId());
@@ -39,7 +40,7 @@ public class StukManipulatieTests {
 		
 	}
 
-	private SchaakStuk newSchaakStuk(ChessColor color, String type, Boolean onBoard) {
+	private SchaakStuk newSchaakStuk(ChessColor color, ChessType type, Boolean onBoard) {
 		SchaakStuk stuk = new SchaakStuk();
 		stuk.setColor(color);
 		stuk.setOnBoard(onBoard);

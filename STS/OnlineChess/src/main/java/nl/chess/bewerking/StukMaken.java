@@ -36,7 +36,7 @@ public class StukMaken {
 				for (Integer kolom : schaakstukType.getKolommen()) {
 					SchaakStuk stuk = new SchaakStuk();
 					stuk.setBord(b);
-					stuk.setType(schaakstukType.name());
+					stuk.setType(schaakstukType);
 					stuk.setColor(color);
 					stuk.setOnBoard(true);
 					List<Integer> coordinaten = schaakstukType.getCoordinaten(color, kolom);
@@ -52,21 +52,28 @@ public class StukMaken {
 
 	@CrossOrigin("http://localhost:8081")
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
-	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
+	public Boolean zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+
+		Boolean hetKan = stuk.magZetten(x,y);
 		
-		if(x >= 0 && x<8 && y >=0 && y<8){
-		stuk.getCoords().clear();
-		dataStuk.save(stuk);
-		stuk.getCoords().add(x);
-		stuk.getCoords().add(y);
+		if(hetKan){
+			stuk.getCoords().clear();
+			dataStuk.save(stuk);
+			
+			stuk.getCoords().add(x);
+			stuk.getCoords().add(y);
+
+			dataStuk.save(stuk).getBord();
 		}
-		return dataStuk.save(stuk).getBord();
+		
+	
+		return hetKan;
 	}
 		
 	
 	@RequestMapping("verander/{type}")
-	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable String type) {
+	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable ChessType type) {
 		pion.setType(type);
 		return dataStuk.save(pion);		
 	}	
