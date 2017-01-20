@@ -54,12 +54,13 @@ public class StukMaken {
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
 	public Bord zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+		
+		if(x >= 0 && x<8 && y >=0 && y<8){
 		stuk.getCoords().clear();
 		dataStuk.save(stuk);
-		
 		stuk.getCoords().add(x);
 		stuk.getCoords().add(y);
-
+		}
 		return dataStuk.save(stuk).getBord();
 	}
 		
