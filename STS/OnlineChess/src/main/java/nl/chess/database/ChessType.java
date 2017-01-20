@@ -7,8 +7,19 @@ public enum ChessType {
 	PAWN(null, null, 1, 0, 1, 2, 3, 4, 5, 6, 7) {
 		@Override
 		public boolean kanNaar(List<Integer> currentCords, List<Integer> newCords, ChessColor color) {
-			return super.kanNaar(currentCords, newCords, color);
-		}
+			Boolean hetKan = false;
+			Integer xverschil = newCords.get(0)- currentCords.get(0);
+			Integer yverschil = newCords.get(1)- currentCords.get(1);
+			Integer richting = color == ChessColor.BLACK ? 1 : -1;
+			
+			if(xverschil*richting == 1){
+				hetKan = true;
+			}else if(xverschil*richting == 2 && (currentCords.get(0)==richting || (currentCords.get(0)==6 && richting==-1))){
+				hetKan = true;
+			}
+						
+			return hetKan;
+			}
 		
 	}, 
 	ROOK(false, Richting.RECHT, 0, 0, 7), 
