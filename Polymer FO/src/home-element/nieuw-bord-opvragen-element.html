@@ -5,7 +5,7 @@
 <dom-module id="nieuw-bord-opvragen-element">
   <template id = "template" is="dom-bind">
 		<paper-button raised on-tap="handleTap">Restart!</paper-button>
-		<iron-ajax id="xhr" auto url="http://localhost:8080/nieuwbord" handle-as="json" on-response="handleResponse"></iron-ajax>
+		<iron-ajax id="xhr" auto url="http://localhost:8080/zetten/bordmaken" handle-as="json" on-response="handleResponse"></iron-ajax>
   </template>
 
   <script>
