@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ public class BordMaken {
 	@Autowired
 	private BordManipulatie dataBord;
 	
+	@CrossOrigin(origins = "http://localhost:8081")
 	@RequestMapping("bordmaken")
 	public Bord createBord(){
 		Bord bord = new Bord();

@@ -15,9 +15,10 @@ public class getBordController{
 	private BordManipulatie dataBord;
 	
 	@CrossOrigin(origins = "http://localhost:8081")
-	@RequestMapping(value ="/nieuwbord" ,method = RequestMethod.GET)
+	@RequestMapping(value ="/nieuwbord",method = RequestMethod.GET)
 	public Bord nieuwBord(){
-		Bord b = dataBord.findOne(new Long(1));
-		return b;
+		Bord bord = new Bord();
+		dataBord.save(bord);
+		return bord;
 	}
 }

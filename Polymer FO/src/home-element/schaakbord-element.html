@@ -54,7 +54,6 @@
 		if(!select){
 			if(e.target.className !="veld"){
 				schaakstukId = e.target.id;
-				alert("schaakstukId " + schaakstukId);
 				select = !select;
 			}
 		}else{
@@ -66,7 +65,6 @@
 			
 			select = !select;
 			
-			alert("field " + field);
 			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + field.charAt(3) + "/" + field.charAt(4);
 			this.$.zet.generateRequest();
 		}		

@@ -27,6 +27,7 @@ public class StukMaken {
 	@Autowired
 	private BordManipulatie dataBord;
 	
+	@CrossOrigin(origins = "http://localhost:8081")
 	@RequestMapping("bordmaken")
 	public Bord createBord(){
 		Bord b = new Bord();
@@ -51,14 +52,6 @@ public class StukMaken {
 		return b;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:8081")
-	@RequestMapping(value = "zet2", method=RequestMethod.POST)
-	public String zet2(@RequestBody String fieldOne) {
-		System.out.println(fieldOne);
-		return fieldOne;
-		// stuk.setCoords(coordinaten);
-		// return dataStuk.save(stuk).getBord();
-	}		
 
 	@CrossOrigin(origins = "http://localhost:8081")
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
