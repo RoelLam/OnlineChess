@@ -1,23 +1,26 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
 <dom-module id="nieuw-bord-opvragen-element">
   <template id = "template" is="dom-bind">
 		<paper-button raised on-tap="handleTap">Restart!</paper-button>
+		<iron-localstorage id="test_cookie"></iron-localstorage>
 		<iron-ajax id="xhr" auto url="http://localhost:8080/zetten/bordmaken" handle-as="json" on-response="handleResponse"></iron-ajax>
   </template>
 
   <script>
     Polymer({
       is: 'nieuw-bord-opvragen-element',
-	  
+				
 		handleResponse: function(e){
 			const resp = e.detail.response;
 			this.data = resp.schaakStukken;
 		},
 		handleTap: function(e){
 			xhr.generateRequest();
+			doeDit();
 		},
       properties: {
         test_width: {

@@ -54,6 +54,7 @@ public class StukMaken {
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
 	public String zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+
 		Boolean hetKan = stuk.magZetten(x,y);
 		
 		if(hetKan){

@@ -9,6 +9,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class SchaakStuk {
 	private ChessColor color;
 	@Column(nullable=false)
 	private Boolean onBoard = Boolean.TRUE;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<Integer> coords = new ArrayList<>();
 	@ManyToOne
 	@JsonIgnore
