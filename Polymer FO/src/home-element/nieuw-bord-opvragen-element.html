@@ -21,11 +21,11 @@
 			else{
 				const resp = e.detail.response;
 				this.data = resp.schaakStukken;
-				document.cookie = "bord_id="+ resp.id +"";
+				setCookie(resp.id);
 			}
 		},
 		handleTap: function(e){
-			document.cookie = "bord_id=;, path=/;";
+			setCookie("");
 			xhr.generateRequest();
 		},
 		getExistingBord: function(e){
@@ -46,6 +46,12 @@
 		
 		
     });
+	function setCookie(id){
+		var expirationDate = new Date();
+		expirationDate.setFullYear(expirationDate.getFullYear() + 1);
+		document.cookie = "bord_id=" + id + "; path=/; expires=" + expirationDate.toUTCString();
+	}
+	
 	function getCookie(name){
 			var cookiename = name + "=";
 			var cookie = document.cookie;
