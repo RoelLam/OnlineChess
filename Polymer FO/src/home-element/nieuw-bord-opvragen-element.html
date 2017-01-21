@@ -4,9 +4,10 @@
 <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
 <dom-module id="nieuw-bord-opvragen-element">
-  <template id = "template" is="dom-bind">
+  <template>
 		<paper-button raised on-tap="handleTap">Restart!</paper-button>
 		<iron-ajax id="xhr" auto url="http://localhost:8080/zetten/bordmaken" handle-as="json" on-response="handleResponse"></iron-ajax>
+		<iron-ajax id="xhr2" auto handle-as="json" on-response="getExistingBord"></iron-ajax>
   </template>
 
   <script>
@@ -14,12 +15,25 @@
       is: 'nieuw-bord-opvragen-element',
 				
 		handleResponse: function(e){
+			if (getCookie("bord_id") != ""){
+				xhr2.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+			}
+			else{
+				const resp = e.detail.response;
+				this.data = resp.schaakStukken;
+				document.cookie = "bord_id="+ resp.id +"";
+			}
+		},
+		handleTap: function(e){
+			document.cookie = "bord_id=;, path=/;";
+			xhr.generateRequest();
+		},
+		getExistingBord: function(e){
 			const resp = e.detail.response;
 			this.data = resp.schaakStukken;
 		},
-		handleTap: function(e){
-			xhr.generateRequest();
-		},
+		
+		
       properties: {
         test_width: {
           type: String,
@@ -29,8 +43,26 @@
 			notify: true
 			},
 		},
+		
+		
     });
-	
+	function getCookie(name){
+			var cookiename = name + "=";
+			var cookie = document.cookie;
+			var cookieData = decodeURIComponent(cookie);
+			var cookieStringArray = cookieData.split(';');
+			var cookieNaam = "bord_id=";
+			for (var i = 0; i<cookieStringArray.length; i++){
+				var c = cookieStringArray[i];
+				while(c.charAt(0) == ' '){
+					c = c.substring(1);
+				}
+				if(c.indexOf(cookieNaam)==0){
+					return c.substring(cookieNaam.length, c.length);
+				}
+			}
+			return "";
+		}
   </script>
   
 </dom-module>

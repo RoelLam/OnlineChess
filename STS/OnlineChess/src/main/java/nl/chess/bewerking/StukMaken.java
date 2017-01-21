@@ -71,6 +71,11 @@ public class StukMaken {
 		return hetKan.toString();
 	}
 		
+	@CrossOrigin("http://localhost:8081")
+	@RequestMapping(value="bord/{bordId}", method = RequestMethod.GET)
+	public Bord geefBestaandBord(@PathVariable Long bordId){
+		return dataBord.findOne(bordId);
+	}
 	
 	@RequestMapping("verander/{type}")
 	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable ChessType type) {
