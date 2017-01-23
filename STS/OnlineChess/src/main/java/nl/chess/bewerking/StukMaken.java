@@ -74,11 +74,11 @@ public class StukMaken {
 					stuk.getCoords().add(xOud);
 					stuk.getCoords().add(yOud);
 					dataStuk.save(stuk);
-				}
+				}else{
 	
-				dataStuk.save(stuk);
-				
-				andereKleurAanDeBeurt(stuk);
+					dataStuk.save(stuk);
+					andereKleurAanDeBeurt(stuk);
+				}
 			}
 			return zetMag.toString();
 		}
