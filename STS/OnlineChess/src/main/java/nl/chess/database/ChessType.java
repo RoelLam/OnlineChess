@@ -12,12 +12,13 @@ public enum ChessType {
 			Integer yverschil = newCords.get(1)- currentCords.get(1);
 			Integer kleur = color == ChessColor.BLACK ? 1 : -1;
 			
-			if(xverschil*kleur == 1){
-				hetKan = true;
-			}else if(xverschil*kleur == 2 && (currentCords.get(0)==kleur || (currentCords.get(0)==6 && kleur==-1))){
-				hetKan = true;
-			}
-						
+			if(yverschil==0){
+				if(xverschil*kleur == 1){
+					hetKan = true;
+				}else if(xverschil*kleur == 2 && (currentCords.get(0)==kleur || (currentCords.get(0)==6 && kleur==-1))){
+					hetKan = true;
+				}
+			}			
 			return hetKan;
 			}
 		
