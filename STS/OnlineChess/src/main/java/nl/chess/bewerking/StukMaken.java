@@ -92,6 +92,17 @@ public class StukMaken {
 		return dataBord.findOne(bordId);
 	}
 	
+	@CrossOrigin("http://localhost:8081")
+	@RequestMapping(value="isKleurAanDeBeurt/{schaakstukId}", method = RequestMethod.GET)
+	public String isKleurAanDeBeurt(@PathVariable Long schaakstukId){
+		if(dataStuk.findOne(schaakstukId).getColor() == dataStuk.findOne(schaakstukId).getBord().getAanDeBeurt()){
+			return "True";
+		}
+		else{
+			return "False";
+		}
+	}
+	
 	@RequestMapping("verander/{type}")
 	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable ChessType type) {
 		pion.setType(type);
@@ -142,8 +153,7 @@ public class StukMaken {
 					return true;
 				}
 			}
-		}
-		
+		}	
 		return false;
 
 	}
