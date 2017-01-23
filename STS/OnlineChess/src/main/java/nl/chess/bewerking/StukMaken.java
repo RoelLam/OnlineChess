@@ -61,13 +61,20 @@ public class StukMaken {
 			Boolean zetMag = magZetten(stuk, x,y);
 			
 			if(zetMag){
+				Integer xOud = stuk.getCoords().get(0);
+				Integer yOud = stuk.getCoords().get(1);
 				stuk.getCoords().clear();
-				dataStuk.save(stuk);
-				
 				stuk.getCoords().add(x);
 				stuk.getCoords().add(y);
+				dataStuk.save(stuk);
+				
+				if(staatSchaak(stuk.getBord(),stuk.getColor())){
+					zetMag = false;
+					stuk.getCoords().clear();
+					stuk.setCoords(Arrays.asList(xOud,yOud));
+					dataStuk.save(stuk);
+				}
 	
-				dataStuk.save(stuk).getBord();
 			}
 			return zetMag.toString();
 		}
@@ -94,5 +101,33 @@ public class StukMaken {
 	
 	public boolean juisteKleur(SchaakStuk stuk){
 		return (stuk.getColor() == stuk.getBord().getAanDeBeurt());
+	}
+	
+	public ChessColor andereKleur(ChessColor color){
+		if (color==ChessColor.WHITE){
+			return ChessColor.BLACK;
+		}else {
+			return ChessColor.WHITE;
+		}
+	}
+	
+	public boolean staatSchaak(Bord bord, ChessColor color){
+		List<Integer> coordsKoning = Arrays.asList(0,4);
+		
+		for(SchaakStuk stuk : bord.getSchaakStukken()){
+			if(stuk.getColor()==color && stuk.getType() == ChessType.KING){
+				coordsKoning = stuk.getCoords();
+			}
+		}		
+				
+		for(SchaakStuk stuk : bord.getSchaakStukken()){
+			if(stuk.getColor()==andereKleur(color)){
+				if(stuk.getType().kanNaar(stuk,coordsKoning)){
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 }

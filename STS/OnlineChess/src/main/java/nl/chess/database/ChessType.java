@@ -62,7 +62,7 @@ public enum ChessType {
 
 	public Boolean staatErStuk(Bord bord, List<Integer> coords){
 		for (SchaakStuk stuk : bord.getSchaakStukken()) {
-			if (stuk.getCoords().get(0) == coords.get(0) && stuk.getCoords().get(1) == coords.get(1)) {
+			if (stuk.getCoords().get(0) == coords.get(0) && stuk.getCoords().get(1) == coords.get(1) && stuk.getOnBoard()) {
 				return true;
 			}
 		}
@@ -120,7 +120,7 @@ public enum ChessType {
 		if (richting == Richting.SCHUIN || richting == Richting.BEIDEN){
 
 			if (Math.abs(xVerschil) == Math.abs(yVerschil)){
-				if(eenPlaats && xVerschil == 1){
+				if(eenPlaats && Math.abs(xVerschil) == 1){
 					hetKan=true;
 				}else if(!eenPlaats && Math.abs(xVerschil)>0){
 					Boolean inDeWeg = staatInDeWeg(stuk,newCords);
