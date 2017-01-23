@@ -71,7 +71,8 @@ public class StukMaken {
 				if(staatSchaak(stuk.getBord(),stuk.getColor())){
 					zetMag = false;
 					stuk.getCoords().clear();
-					stuk.setCoords(Arrays.asList(xOud,yOud));
+					stuk.getCoords().add(xOud);
+					stuk.getCoords().add(yOud);
 					dataStuk.save(stuk);
 				}
 	
