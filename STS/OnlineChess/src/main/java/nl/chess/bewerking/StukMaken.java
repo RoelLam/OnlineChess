@@ -85,6 +85,6 @@ public class StukMaken {
 	}
 	
 	public boolean magZetten(SchaakStuk stuk, Integer x, Integer y){
-		return stuk.getType().kanNaar(stuk.getCoords(), Arrays.asList(x, y), stuk.getColor());
+		return stuk.getType().kanNaar(stuk, Arrays.asList(x, y));
 	}
 }
