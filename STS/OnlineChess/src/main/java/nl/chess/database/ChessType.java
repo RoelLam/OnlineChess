@@ -22,12 +22,12 @@ public enum ChessType {
 				if(xVerschil*kleur == 1){
 					hetKan = true;
 				}else if(xVerschil*kleur == 2 && (xStart==kleur || (xStart==6 && kleur==-1))){
-					Boolean inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
-					if (!inDeWeg){
+					SchaakStuk inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
+					if (inDeWeg == null){
 						hetKan = true;						
 					}
 				}
-			}			
+			}
 			return hetKan;
 			}
 		
@@ -60,13 +60,13 @@ public enum ChessType {
 		return kolommen;
 	}
 
-	public Boolean staatErStuk(Bord bord, List<Integer> coords){
+	public SchaakStuk staatErStuk(Bord bord, List<Integer> coords){
 		for (SchaakStuk stuk : bord.getSchaakStukken()) {
 			if (stuk.getCoords().get(0) == coords.get(0) && stuk.getCoords().get(1) == coords.get(1) && stuk.getOnBoard()) {
-				return true;
+				return stuk;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	public boolean staatInDeWeg(SchaakStuk stuk, List<Integer> newCords){
@@ -82,8 +82,8 @@ public enum ChessType {
 		
 		
 		for(int x=1, y = 1;  x < Math.abs(xVerschil) || y < Math.abs(yVerschil); x++ ,y++) {
-			Boolean veldVol = staatErStuk(stuk.getBord(), Arrays.asList(xStart + x*xInc, yStart + y*yInc));
-			if (veldVol) {
+			SchaakStuk veldVol = staatErStuk(stuk.getBord(), Arrays.asList(xStart + x*xInc, yStart + y*yInc));
+			if (veldVol != null) {
 				return true;
 			}
 		}
@@ -100,7 +100,7 @@ public enum ChessType {
 		Integer yEind = newCords.get(1);
 		Integer xVerschil = xEind - xStart;
 		Integer yVerschil = yEind - yStart;
-		
+
 
 		
 		if (richting == Richting.RECHT || richting == Richting.BEIDEN){
@@ -118,11 +118,11 @@ public enum ChessType {
 			}
 		}
 		if (richting == Richting.SCHUIN || richting == Richting.BEIDEN){
-
 			if (Math.abs(xVerschil) == Math.abs(yVerschil)){
 				if(eenPlaats && Math.abs(xVerschil) == 1){
 					hetKan=true;
 				}else if(!eenPlaats && Math.abs(xVerschil)>0){
+
 					Boolean inDeWeg = staatInDeWeg(stuk,newCords);
 					if (!inDeWeg) {
 						hetKan=true;
@@ -135,8 +135,13 @@ public enum ChessType {
 			if((xVerschil*xVerschil + yVerschil*yVerschil) == 5){
 				hetKan=true;
 			}
+		} 
+		
+		SchaakStuk eindStuk = staatErStuk(stuk.getBord(),newCords);
+		if (eindStuk != null && eindStuk.getColor() == stuk.getColor()){
+			hetKan=false;
 		}
-		if(hetKan) System.out.println("true"); else System.out.println("false");	
+
 		return hetKan;
 	}
 	
