@@ -6,17 +6,26 @@ import java.util.List;
 public enum ChessType {
 	PAWN(null, null, 1, 0, 1, 2, 3, 4, 5, 6, 7) {
 		@Override
-		public boolean kanNaar(List<Integer> currentCords, List<Integer> newCords, ChessColor color) {
+		public boolean kanNaar(SchaakStuk stuk, List<Integer> newCords) {
 			Boolean hetKan = false;
-			Integer xverschil = newCords.get(0)- currentCords.get(0);
-			Integer yverschil = newCords.get(1)- currentCords.get(1);
-			Integer kleur = color == ChessColor.BLACK ? 1 : -1;
 			
-			if(yverschil==0){
-				if(xverschil*kleur == 1){
+			Integer xStart  = stuk.getCoords().get(0);
+			Integer yStart = stuk.getCoords().get(1);
+			Integer xEind = newCords.get(0);
+			Integer yEind = newCords.get(1);
+			Integer xVerschil = xEind - xStart;
+			Integer yVerschil = yEind - yStart;
+
+			Integer kleur = stuk.getColor() == ChessColor.BLACK ? 1 : -1;
+			
+			if(yVerschil==0){
+				if(xVerschil*kleur == 1){
 					hetKan = true;
-				}else if(xverschil*kleur == 2 && (currentCords.get(0)==kleur || (currentCords.get(0)==6 && kleur==-1))){
-					hetKan = true;
+				}else if(xVerschil*kleur == 2 && (xStart==kleur || (xStart==6 && kleur==-1))){
+					Boolean inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
+					if (!inDeWeg){
+						hetKan = true;						
+					}
 				}
 			}			
 			return hetKan;
@@ -51,36 +60,79 @@ public enum ChessType {
 		return kolommen;
 	}
 
-	public boolean kanNaar(List<Integer> currentCords, List<Integer> newCords, ChessColor color) {
-		boolean hetKan = false;
-		Integer xverschil = currentCords.get(0)-newCords.get(0);
-		Integer yverschil = currentCords.get(1) - newCords.get(1);
+	public Boolean staatErStuk(Bord bord, List<Integer> coords){
+		for (SchaakStuk stuk : bord.getSchaakStukken()) {
+			if (stuk.getCoords().get(0) == coords.get(0) && stuk.getCoords().get(1) == coords.get(1) && stuk.getOnBoard()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean staatInDeWeg(SchaakStuk stuk, List<Integer> newCords){
 		
+		Integer xStart  = stuk.getCoords().get(0);
+		Integer yStart = stuk.getCoords().get(1);
+		Integer xEind = newCords.get(0);
+		Integer yEind = newCords.get(1);
+		Integer xVerschil = xEind - xStart;
+		Integer yVerschil = yEind - yStart;
+		Integer xInc = (xVerschil > 0) ? 1 : (xVerschil == 0) ? 0 : -1;
+		Integer yInc = (yVerschil > 0) ? 1 : (yVerschil == 0) ? 0 : -1;
+		
+		
+		for(int x=1, y = 1;  x < Math.abs(xVerschil) || y < Math.abs(yVerschil); x++ ,y++) {
+			Boolean veldVol = staatErStuk(stuk.getBord(), Arrays.asList(xStart + x*xInc, yStart + y*yInc));
+			if (veldVol) {
+				return true;
+			}
+		}
+		return false;
+		
+	}
+	
+	public boolean kanNaar(SchaakStuk stuk, List<Integer> newCords) {
+		boolean hetKan = false;
+		
+		Integer xStart  = stuk.getCoords().get(0);
+		Integer yStart = stuk.getCoords().get(1);
+		Integer xEind = newCords.get(0);
+		Integer yEind = newCords.get(1);
+		Integer xVerschil = xEind - xStart;
+		Integer yVerschil = yEind - yStart;
+		
+
 		
 		if (richting == Richting.RECHT || richting == Richting.BEIDEN){
 			
-			if (xverschil==0 ^ yverschil==0){
-				if(eenPlaats && Math.abs(xverschil + yverschil) == 1){
+			if (xVerschil==0 ^ yVerschil==0){
+				if(eenPlaats && Math.abs(xVerschil + yVerschil) == 1){
 					hetKan = true;
 				}else if(!eenPlaats){
-					hetKan = true;
+					Boolean inDeWeg = staatInDeWeg(stuk,newCords);
+					if (!inDeWeg) {
+						hetKan = true;
+					}
 				}
 
 			}
 		}
 		if (richting == Richting.SCHUIN || richting == Richting.BEIDEN){
 
-			if (Math.abs(xverschil) == Math.abs(yverschil)){
-				if(eenPlaats && xverschil == 1){
+			if (Math.abs(xVerschil) == Math.abs(yVerschil)){
+				if(eenPlaats && Math.abs(xVerschil) == 1){
 					hetKan=true;
-				}else if(!eenPlaats && Math.abs(xverschil)>0){
-					hetKan=true;
+				}else if(!eenPlaats && Math.abs(xVerschil)>0){
+					Boolean inDeWeg = staatInDeWeg(stuk,newCords);
+					if (!inDeWeg) {
+						hetKan=true;
+					}
 				}
 
 			}
 		}		
 		if(richting == Richting.PAARDENSPRONG){
-			if((xverschil*xverschil + yverschil*yverschil) == 5){
+			if((xVerschil*xVerschil + yVerschil*yVerschil) == 5){
 				hetKan=true;
 			}
 		}
