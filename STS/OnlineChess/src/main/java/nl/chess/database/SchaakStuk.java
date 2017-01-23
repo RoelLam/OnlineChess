@@ -72,9 +72,4 @@ public class SchaakStuk {
 	public void setBord(Bord bord) {
 		this.bord = bord;
 	}
-	
-	public boolean magZetten(Integer x, Integer y){
-		return type.kanNaar(coords, Arrays.asList(x, y), color);
-	}
-	
 }

@@ -1,5 +1,6 @@
 package nl.chess.bewerking;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class StukMaken {
 	public String zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
 
-		Boolean hetKan = stuk.magZetten(x,y);
+		Boolean hetKan = magZetten(stuk, x,y);
 		
 		if(hetKan){
 			stuk.getCoords().clear();
@@ -81,5 +82,9 @@ public class StukMaken {
 	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable ChessType type) {
 		pion.setType(type);
 		return dataStuk.save(pion);		
-	}	
+	}
+	
+	public boolean magZetten(SchaakStuk stuk, Integer x, Integer y){
+		return stuk.getType().kanNaar(stuk.getCoords(), Arrays.asList(x, y), stuk.getColor());
+	}
 }
