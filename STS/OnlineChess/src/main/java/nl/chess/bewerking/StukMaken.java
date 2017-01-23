@@ -55,21 +55,25 @@ public class StukMaken {
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
 	public String zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
-
-		Boolean hetKan = magZetten(stuk, x,y);
 		
-		if(hetKan){
-			stuk.getCoords().clear();
-			dataStuk.save(stuk);
+		Boolean kleurMag = juisteKleur(stuk);
+		if(kleurMag){
+			Boolean zetMag = magZetten(stuk, x,y);
 			
-			stuk.getCoords().add(x);
-			stuk.getCoords().add(y);
-
-			dataStuk.save(stuk).getBord();
-		}
-		
+			if(zetMag){
+				stuk.getCoords().clear();
+				dataStuk.save(stuk);
+				
+				stuk.getCoords().add(x);
+				stuk.getCoords().add(y);
 	
-		return hetKan.toString();
+				dataStuk.save(stuk).getBord();
+			}
+			return zetMag.toString();
+		}
+		else{
+			return kleurMag.toString();
+		}
 	}
 		
 	@CrossOrigin("http://localhost:8081")
@@ -86,5 +90,9 @@ public class StukMaken {
 	
 	public boolean magZetten(SchaakStuk stuk, Integer x, Integer y){
 		return stuk.getType().kanNaar(stuk, Arrays.asList(x, y));
+	}
+	
+	public boolean juisteKleur(SchaakStuk stuk){
+		return (stuk.getColor() == stuk.getBord().getAanDeBeurt());
 	}
 }
