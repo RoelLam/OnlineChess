@@ -22,7 +22,10 @@ public enum ChessType {
 				if(xVerschil*kleur == 1){
 					hetKan = true;
 				}else if(xVerschil*kleur == 2 && (xStart==kleur || (xStart==6 && kleur==-1))){
-					hetKan = true;
+					Boolean inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
+					if (!inDeWeg){
+						hetKan = true;						
+					}
 				}
 			}			
 			return hetKan;
