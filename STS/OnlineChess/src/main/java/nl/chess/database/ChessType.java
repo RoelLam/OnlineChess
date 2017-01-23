@@ -120,7 +120,10 @@ public enum ChessType {
 				if(eenPlaats && xVerschil == 1){
 					hetKan=true;
 				}else if(!eenPlaats && Math.abs(xVerschil)>0){
-					hetKan=true;
+					Boolean inDeWeg = staatInDeWeg(stuk,newCords);
+					if (!inDeWeg) {
+						hetKan=true;
+					}
 				}
 
 			}
