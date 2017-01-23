@@ -59,10 +59,12 @@ public class StukMaken {
 		Boolean kleurMag = juisteKleur(stuk);
 		if(kleurMag){
 			Boolean zetMag = magZetten(stuk, x,y);
+
 			
 			if(zetMag){
 				Integer xOud = stuk.getCoords().get(0);
 				Integer yOud = stuk.getCoords().get(1);
+							
 				stuk.getCoords().clear();
 				stuk.getCoords().add(x);
 				stuk.getCoords().add(y);
@@ -70,15 +72,28 @@ public class StukMaken {
 				
 				if(staatSchaak(stuk.getBord(),stuk.getColor())){
 					zetMag = false;
+				}
+				stuk.getCoords().clear();
+				stuk.getCoords().add(xOud);
+				stuk.getCoords().add(yOud);
+				dataStuk.save(stuk);
+				
+				
+				if(zetMag){
+					SchaakStuk geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(x,y));	
+
+					if(geslagenStuk != null){
+						geslagenStuk.setOnBoard(false);
+						dataStuk.save(geslagenStuk);
+					}
 					stuk.getCoords().clear();
-					stuk.getCoords().add(xOud);
-					stuk.getCoords().add(yOud);
-					dataStuk.save(stuk);
-				}else{
-	
+					stuk.getCoords().add(x);
+					stuk.getCoords().add(y);
+					
 					dataStuk.save(stuk);
 					andereKleurAanDeBeurt(stuk);
 				}
+
 			}
 			return zetMag.toString();
 		}
@@ -146,6 +161,9 @@ public class StukMaken {
 		}
 		
 		return false;
-
 	}
+	
 }
+
+
+	
