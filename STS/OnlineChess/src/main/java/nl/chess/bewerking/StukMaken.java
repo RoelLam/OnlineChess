@@ -76,6 +76,9 @@ public class StukMaken {
 					dataStuk.save(stuk);
 				}
 	
+				dataStuk.save(stuk);
+				
+				andereKleurAanDeBeurt(stuk);
 			}
 			return zetMag.toString();
 		}
@@ -104,6 +107,19 @@ public class StukMaken {
 		return (stuk.getColor() == stuk.getBord().getAanDeBeurt());
 	}
 	
+
+	public void andereKleurAanDeBeurt(SchaakStuk stuk){
+		Bord b = stuk.getBord();
+		if(b.getAanDeBeurt() == ChessColor.WHITE){
+			b.setAanDeBeurt(ChessColor.BLACK);
+		}
+		else{
+			b.setAanDeBeurt(ChessColor.WHITE);
+		}
+		dataBord.save(b);
+		return;
+	}
+	
 	public ChessColor andereKleur(ChessColor color){
 		if (color==ChessColor.WHITE){
 			return ChessColor.BLACK;
@@ -130,5 +146,6 @@ public class StukMaken {
 		}
 		
 		return false;
+
 	}
 }
