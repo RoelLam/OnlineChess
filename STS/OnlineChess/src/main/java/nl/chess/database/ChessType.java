@@ -91,4 +91,8 @@ public enum ChessType {
 	private enum Richting {
 		RECHT, SCHUIN, BEIDEN, PAARDENSPRONG;
 	}
+	
+	public boolean juisteKleur(SchaakStuk stuk){
+		return (stuk.getColor() == stuk.getBord().getAanDeBeurt());
+	}
 }
