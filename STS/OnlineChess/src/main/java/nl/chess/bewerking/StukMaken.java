@@ -67,7 +67,9 @@ public class StukMaken {
 				stuk.getCoords().add(x);
 				stuk.getCoords().add(y);
 	
-				dataStuk.save(stuk).getBord();
+				dataStuk.save(stuk);
+				
+				andereKleurAanDeBeurt(stuk);
 			}
 			return zetMag.toString();
 		}
@@ -94,5 +96,17 @@ public class StukMaken {
 	
 	public boolean juisteKleur(SchaakStuk stuk){
 		return (stuk.getColor() == stuk.getBord().getAanDeBeurt());
+	}
+	
+	public void andereKleurAanDeBeurt(SchaakStuk stuk){
+		Bord b = stuk.getBord();
+		if(b.getAanDeBeurt() == ChessColor.WHITE){
+			b.setAanDeBeurt(ChessColor.BLACK);
+		}
+		else{
+			b.setAanDeBeurt(ChessColor.WHITE);
+		}
+		dataBord.save(b);
+		return;
 	}
 }

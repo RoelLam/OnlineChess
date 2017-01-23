@@ -26,6 +26,7 @@
 	var select = false;
 	var schaakstukId; var startField; var endField; 
 	var xcoord; var ycoord;
+	var selectedElement;
     Polymer({
       is: 'schaakbord-element',
 
@@ -50,7 +51,6 @@
 	  
 	  handleZet: function(e){
 		var resp = e.detail.response;
-		console.log(resp);
 		if(resp=="true"){
 			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
 			var typeColor = iconName.substr(17,iconName.length - 1); 
@@ -62,12 +62,14 @@
 	  
 	  selectPiece: function(e){
 		
-		
 		if(!select){
 			if(e.target.className !="veld"){
+				console.log(e);
 				schaakstukId = e.target.id;
+				selectedElement = e.target.parentElement;
+				selectedElement.className += ' achtergrondKleur';
 				select = !select;
-				startField = e.target.parentNode.id;
+				startField = e.target.parentNode.id; 
 			}
 		}else{
 			if(e.target.className !="veld"){
@@ -83,6 +85,10 @@
 			
 			this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + xcoord + "/" + ycoord;
 			this.$.zet.generateRequest();
+			console.log(e.target.parentElement.className.replace(' achtergrondKleur',''));
+			if(selectedElement){
+				selectedElement.className = 'veld';
+			}
 		}		
 		
 	 },
