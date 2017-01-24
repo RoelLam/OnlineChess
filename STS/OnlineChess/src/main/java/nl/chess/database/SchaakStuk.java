@@ -28,12 +28,7 @@ public class SchaakStuk {
 	@Enumerated(EnumType.STRING)
 	private ChessColor color;
 	
-	public Boolean getRokeren() {
-		return rokeren;
-	}
-	public void setRokeren(Boolean rokeren) {
-		this.rokeren = rokeren;
-	}
+
 	@Column(nullable=false)
 	private Boolean rokeren;	
 	@Column(nullable=false)
@@ -62,6 +57,14 @@ public class SchaakStuk {
 	public void setColor(ChessColor color) {
 		this.color = color;
 	}
+	
+	public Boolean getRokeren() {
+		return rokeren;
+	}
+	public void setRokeren(Boolean rokeren) {
+		this.rokeren = rokeren;
+	}
+	
 	public Boolean getOnBoard() {
 		return onBoard;
 	}

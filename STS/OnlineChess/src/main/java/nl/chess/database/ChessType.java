@@ -147,13 +147,68 @@ public enum ChessType {
 			if((xVerschil*xVerschil + yVerschil*yVerschil) == 5){
 				hetKan=true;
 			}
-		} 
+		}
+		
+		if(richting == Richting.BEIDEN && eenPlaats && xVerschil == 0 && stuk.getRokeren()){
+			if(yVerschil == -2){
+				for(int i=1;i<4;i++){
+					if(staatErStuk(stuk.getBord(),Arrays.asList(xStart,i))!=null){
+						return hetKan;
+					}
+				}
+				SchaakStuk torenHopelijk = staatErStuk(stuk.getBord(),Arrays.asList(xStart,0));		
+				if(torenHopelijk == null){
+					return hetKan;
+				}else{
+					if(!torenHopelijk.getRokeren()){
+						return hetKan;
+					}
+				}	
+				hetKan = true;				
+			}
+			if(yVerschil == 2){
+				for(int i=5;i<7;i++){
+					if(staatErStuk(stuk.getBord(),Arrays.asList(xStart,i))!=null){
+						return hetKan;
+					}
+				}
+				SchaakStuk torenHopelijk = staatErStuk(stuk.getBord(),Arrays.asList(xStart,7));		
+				if(torenHopelijk == null){
+					return hetKan;
+				}else{
+					if(!torenHopelijk.getRokeren()){
+						return hetKan;
+					}
+				}
+				hetKan = true;
+			}
+			
+			
+			
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		SchaakStuk eindStuk = staatErStuk(stuk.getBord(),newCords);
 		if (eindStuk != null && eindStuk.getColor() == stuk.getColor()){
 			hetKan=false;
 		}
 
+		
+		
+		
+		
+		
+		
+		
+		
 		return hetKan;
 	}
 	
