@@ -4,6 +4,7 @@ package nl.chess.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,6 +24,9 @@ public class Bord {
 	private List<SchaakStuk> schaakStukken = new ArrayList<>();
 	@Enumerated(EnumType.STRING)
 	private ChessColor aanDeBeurt = ChessColor.WHITE;
+	@Column
+	private Integer enPassant;
+	
 	
 	public Long getId() {
 		return id;
@@ -42,4 +46,12 @@ public class Bord {
 	public void setAanDeBeurt(ChessColor aanDeBeurt) {
 		this.aanDeBeurt = aanDeBeurt;
 	}
+	
+	public Integer getEnPassant() {
+		return enPassant;
+	}
+	public void setEnPassant(Integer enPassant) {
+		this.enPassant = enPassant;
+	}
+	
 }

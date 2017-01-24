@@ -38,6 +38,9 @@ public enum ChessType {
 						hetKan = true;
 					}
 				}
+				if(stuk.getBord().getEnPassant()==yEind && xEind== (kleur == 1 ? 5 : 2)){
+					hetKan = true;
+				}
 			}
 						
 			return hetKan;
@@ -189,26 +192,11 @@ public enum ChessType {
 			
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		SchaakStuk eindStuk = staatErStuk(stuk.getBord(),newCords);
 		if (eindStuk != null && eindStuk.getColor() == stuk.getColor()){
 			hetKan=false;
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
 		return hetKan;
 	}
 	
