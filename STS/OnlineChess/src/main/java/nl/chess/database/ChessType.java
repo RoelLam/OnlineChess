@@ -18,18 +18,30 @@ public enum ChessType {
 
 			Integer kleur = stuk.getColor() == ChessColor.BLACK ? 1 : -1;
 			
-			if(yVerschil==0){
-				if(xVerschil*kleur == 1){
-					hetKan = true;
-				}else if(xVerschil*kleur == 2 && (xStart==kleur || (xStart==6 && kleur==-1))){
-					SchaakStuk inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
-					if (inDeWeg == null){
-						hetKan = true;						
+			if(staatErStuk(stuk.getBord(),Arrays.asList(xEind,yEind))==null){
+				if(yVerschil==0){
+					if(xVerschil*kleur == 1){
+						hetKan = true;
+					}else if(xVerschil*kleur == 2 && (xStart==kleur || (xStart==6 && kleur==-1))){
+						SchaakStuk inDeWeg = staatErStuk(stuk.getBord(),Arrays.asList(xStart+kleur,yStart));
+						if (inDeWeg == null){
+							hetKan = true;						
+						}
 					}
 				}
 			}
-			return hetKan;
+			
+			if(Math.abs(yVerschil)==1 && xVerschil==kleur){
+				SchaakStuk geslagenStuk = staatErStuk(stuk.getBord(),Arrays.asList(xEind,yEind));
+				if(geslagenStuk != null){
+					if(geslagenStuk.getColor() != stuk.getColor()){
+						hetKan = true;
+					}
+				}
 			}
+						
+			return hetKan;
+		}
 		
 	}, 
 	ROOK(false, Richting.RECHT, 0, 0, 7), 
