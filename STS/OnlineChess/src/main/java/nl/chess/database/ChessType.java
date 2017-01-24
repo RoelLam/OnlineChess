@@ -101,8 +101,6 @@ public enum ChessType {
 		Integer xVerschil = xEind - xStart;
 		Integer yVerschil = yEind - yStart;
 
-
-		
 		if (richting == Richting.RECHT || richting == Richting.BEIDEN){
 			
 			if (xVerschil==0 ^ yVerschil==0){
@@ -117,6 +115,7 @@ public enum ChessType {
 
 			}
 		}
+	
 		if (richting == Richting.SCHUIN || richting == Richting.BEIDEN){
 			if (Math.abs(xVerschil) == Math.abs(yVerschil)){
 				if(eenPlaats && Math.abs(xVerschil) == 1){
@@ -130,7 +129,8 @@ public enum ChessType {
 				}
 
 			}
-		}		
+		}
+		
 		if(richting == Richting.PAARDENSPRONG){
 			if((xVerschil*xVerschil + yVerschil*yVerschil) == 5){
 				hetKan=true;
