@@ -13,7 +13,7 @@
       } 
     </style>
 	<div>
-		<schaakbord-element width="{{my_app_width}}"></schaakbord-element>
+		<schaakbord-element width="{{my_app_width}}" bordData ="{{data_app}}"></schaakbord-element>
 		<raster-element width="{{my_app_width}}" bordGegevens="{{data_app}}"></raster-element>
 	</div>
   </template>
@@ -27,6 +27,9 @@
         my_app_width: {
           type: String,
         },
+		data_app:{
+			type: Array
+		}
       },
 
     });

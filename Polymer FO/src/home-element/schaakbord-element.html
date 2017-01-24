@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <link rel="import" href="/bower_components/iron-image/iron-image.html">
+<link rel="import" href="/bower_components/iron-dropdown/iron-dropdown.html">
 
 
 
@@ -15,15 +16,18 @@
 			<div id="poging2" style="height:{{height}}px;"><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Bord/Chess_Board.png"></iron-image></div>
 			<content></content>
 		</center>
+		<iron-dropdown id="menu" opened="true" ><div class="dropdown-content">Hello!</div></iron-dropdown>
 	</div>
 	<div id="send">
 		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/" on-response="handleZet" handle-as="text" type="text"></iron-ajax>
 		<iron-ajax id="kleur" on-response="kleurSetten" handle-as="text" type="text"></iron-ajax>
 		<iron-ajax id="veranderStuk" on-response="stukVeranderen" handle-as="json"></iron-ajax>
+		<iron-ajax id="xhr" handle-as="json" on-response="getExistingBord"></iron-ajax>
 	</div>
   </template>
 
   <script>
+	
 	var iets = 0.75*window.screen.availHeight;
 	var select = false;
 	var schaakstukId; var startField; var endField; 
@@ -46,12 +50,18 @@
 		  readOnly: true,
 		  notify: true
         },
+		bordData:{
+			type: Array,
+			notify: true
+		}
 	  },	 
 		 
 	  listeners: {
 		'tap':'selectPiece'
 	  },
-
+		ready: function(){
+			this.$.xhr.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+		},
 	  handleZet: function(e){
 		var resp = e.detail.response;
 		if(resp=="true" || resp=="Schaakmat!"){
@@ -59,9 +69,8 @@
 			var typeColor = iconName.substr(17,iconName.length - 1); 
 			typeColorSplit = typeColor.split("_");
 			document.getElementById(startField).innerHTML="";
-			toonStuk(typeColorSplit[0],typeColorSplit[1],schaakstukId,xcoord,ycoord);
+			this.$.xhr.generateRequest();
 			if((typeColor == "PAWN_WHITE" && xcoord == 0 ) || (typeColor == "PAWN_BLACK" && xcoord == 7)){
-				console.log('opdelaatsterij');
 				this.$.veranderStuk.url = "http://localhost:8080/zetten/verander/" + schaakstukId +"/QUEEN";
 				this.$.veranderStuk.generateRequest();
 			}
@@ -78,7 +87,7 @@
 			var chessColor = response.color;
 			var chessType = response.type;
 			document.getElementById(startField).innerHTML="";
-			toonStuk(chessType, chessColor, schaakstukId, xcoord, ycoord);
+			this.$.xhr.generateRequest();
 		},
 		
 	  kleurSetten: function(e){
@@ -89,6 +98,13 @@
 		}
 	  },
 	  
+	  getExistingBord: function(e){
+			const resp = e.detail.response;
+			this.bordData = resp.schaakStukken;
+			laadStartOpstelling();
+			laadStukken(this.bordData);	
+		},
+		
 	  selectPiece: function(e){
 		
 		if(!select){
@@ -146,6 +162,22 @@
 		icon.setAttribute('id',id);
 		
 		div_voor_stuk.appendChild(icon);
+	}
+		function laadStukken(array){
+		for(var i =0; i<array.length; i++){
+			if(array[i].onBoard){
+				toonStuk(array[i].type, array[i].color, array[i].id, array[i].coords[0], array[i].coords[1]);
+			}
+		}
+	}
+	
+	function laadStartOpstelling(){
+		for(var i = 0; i < 8; i++) {
+			for(var j = 0; j < 8; j++) {
+			var div_voor_stuk = document.getElementById("Vak" + i + "" + j);
+			div_voor_stuk.innerHTML = "";	
+			}
+		}
 	}
   </script>
   
