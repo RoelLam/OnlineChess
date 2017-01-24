@@ -38,8 +38,9 @@
 	}
 	function laadStukken(array){
 		for(var i =0; i<array.length; i++){
-			toonStuk(array[i].type, array[i].color, array[i].id, array[i].coords[0], array[i].coords[1]);
-			
+			if(array[i].onBoard){
+				toonStuk(array[i].type, array[i].color, array[i].id, array[i].coords[0], array[i].coords[1]);
+			}
 		}
 	}
 	
@@ -92,5 +93,23 @@ function toonStuk(type, color, id, i, j){
 
 		
     });
+
+	function getCookie(name){
+			var cookiename = name + "=";
+			var cookie = document.cookie;
+			var cookieData = decodeURIComponent(cookie);
+			var cookieStringArray = cookieData.split(';');
+			var cookieNaam = "bord_id=";
+			for (var i = 0; i<cookieStringArray.length; i++){
+				var c = cookieStringArray[i];
+				while(c.charAt(0) == ' '){
+					c = c.substring(1);
+				}
+				if(c.indexOf(cookieNaam)==0){
+					return c.substring(cookieNaam.length, c.length);
+				}
+			}
+			return "";
+		}
   </script>
 </dom-module>
