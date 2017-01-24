@@ -60,80 +60,92 @@ public class StukMaken {
 	@RequestMapping(value = "zet/{schaakstukId}/{x}/{y}", method = RequestMethod.GET)
 	public String zet(@PathVariable Long schaakstukId, @PathVariable Integer x, @PathVariable Integer y) {
 		SchaakStuk stuk = dataStuk.findOne(schaakstukId);
+		String message = new String();
+		if(stuk.getOnBoard()){
 		
-		Boolean kleurMag = juisteKleur(stuk);
-		if(kleurMag){
-			Boolean zetMag = magZetten(stuk, x,y);
-
+			Boolean kleurMag = juisteKleur(stuk);
+			if(kleurMag){
+				Boolean zetMag = magZetten(stuk, x,y);
 			
-			if(zetMag){
-				Integer xOud = stuk.getCoords().get(0);
-				Integer yOud = stuk.getCoords().get(1);
+				if(zetMag){
+					Integer xOud = stuk.getCoords().get(0);
+					Integer yOud = stuk.getCoords().get(1);
 				
-				SchaakStuk geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(x,y));
-				if(geslagenStuk != null){
-					geslagenStuk.setOnBoard(false);
-					dataStuk.save(geslagenStuk);
-				}else if(stuk.getType()==ChessType.PAWN && yOud - y != 0){
-					geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(xOud,y));
-					geslagenStuk.setOnBoard(false);
-					dataStuk.save(geslagenStuk);
-				}
-				
-				stuk.getCoords().clear();
-				stuk.getCoords().add(x);
-				stuk.getCoords().add(y);
-				dataStuk.save(stuk);
-				
-				if(staatSchaak(stuk.getBord(),stuk.getColor())){
-					zetMag = false;
-				}
-				
-				if(!zetMag){
-					stuk.getCoords().clear();
-					stuk.getCoords().add(xOud);
-					stuk.getCoords().add(yOud);
-					
+					SchaakStuk geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(x,y));
 					if(geslagenStuk != null){
-						geslagenStuk.setOnBoard(true);
+						geslagenStuk.setOnBoard(false);
+						dataStuk.save(geslagenStuk);
+					}else if(stuk.getType()==ChessType.PAWN && yOud - y != 0){
+						geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(xOud,y));
+						geslagenStuk.setOnBoard(false);
 						dataStuk.save(geslagenStuk);
 					}
+				
+					stuk.getCoords().clear();
+					stuk.getCoords().add(x);
+					stuk.getCoords().add(y);
 					dataStuk.save(stuk);
-				}else{
-					if(stuk.getType()==ChessType.KING){
-						if(y-yOud == -2){
-							SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,0));
-							toren.getCoords().clear();
-							toren.getCoords().add(x);
-							toren.getCoords().add(3);
-							dataStuk.save(toren);
-						}
-						if(y-yOud == 2){
-							SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,7));
-							toren.getCoords().clear();
-							toren.getCoords().add(x);
-							toren.getCoords().add(5);
-							dataStuk.save(toren);
-						}						
-					}	
-					
-					if(stuk.getType()==ChessType.PAWN && Math.abs(x-xOud)==2){
-							stuk.getBord().setEnPassant(y);		
-					}else{
-						stuk.getBord().setEnPassant(-1);
+				
+					if(staatSchaak(stuk.getBord(),stuk.getColor())){
+						message = "Let op! Schaak!";
+						zetMag = false;
 					}
 					
-					dataBord.save(stuk.getBord());
-					stuk.setRokeren(false);
-					stuk = dataStuk.save(stuk);
-					andereKleurAanDeBeurt(stuk);
+					if(!zetMag){
+						stuk.getCoords().clear();
+						stuk.getCoords().add(xOud);
+						stuk.getCoords().add(yOud);
+					
+						if(geslagenStuk != null){
+							geslagenStuk.setOnBoard(true);
+							dataStuk.save(geslagenStuk);
+						}
+						dataStuk.save(stuk);
+					}else{
+						if(stuk.getType()==ChessType.KING){
+							if(y-yOud == -2){
+								SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,0));
+								toren.getCoords().clear();
+								toren.getCoords().add(x);
+								toren.getCoords().add(3);
+								dataStuk.save(toren);
+							}
+							if(y-yOud == 2){
+								SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,7));
+								toren.getCoords().clear();
+								toren.getCoords().add(x);
+								toren.getCoords().add(5);
+								dataStuk.save(toren);
+							}						
+						}	
+						
+						if(stuk.getType()==ChessType.PAWN && Math.abs(x-xOud)==2){
+								stuk.getBord().setEnPassant(y);		
+						}else{
+							stuk.getBord().setEnPassant(-1);
+						}
+						
+						dataBord.save(stuk.getBord());
+						stuk.setRokeren(false);
+						stuk = dataStuk.save(stuk);
+						andereKleurAanDeBeurt(stuk);
+						message = zetMag.toString();
+						
+			
+					}	
+				}else{
+					message = "Illegale zet!";
 				}
+
 			}
-			return zetMag.toString();
+			else{
+				message = "Foute kleur!";
+			}
+		}else{
+			message = "Onbestaand stuk!";
 		}
-		else{
-			return kleurMag.toString();
-		}
+		
+		return message;
 	}
 		
 	@CrossOrigin("http://localhost:8081")

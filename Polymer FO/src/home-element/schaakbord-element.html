@@ -54,7 +54,7 @@
 
 	  handleZet: function(e){
 		var resp = e.detail.response;
-		if(resp=="true"){
+		if(resp=="true" || resp=="Schaakmat!"){
 			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
 			var typeColor = iconName.substr(17,iconName.length - 1); 
 			typeColorSplit = typeColor.split("_");
@@ -65,6 +65,11 @@
 				this.$.veranderStuk.url = "http://localhost:8080/zetten/verander/" + schaakstukId +"/QUEEN";
 				this.$.veranderStuk.generateRequest();
 			}
+			if(resp=="Schaakmat!"){
+				alert(resp);
+			}			
+		}else{
+			alert(resp);
 		}
 	  },
 		
