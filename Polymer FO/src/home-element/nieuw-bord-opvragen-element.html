@@ -7,7 +7,7 @@
   <template>
 		<paper-button raised on-tap="handleTap">Restart!</paper-button>
 		<iron-ajax id="xhr" auto url="http://localhost:8080/zetten/bordmaken" handle-as="json" on-response="handleResponse"></iron-ajax>
-		<iron-ajax id="xhr2" auto handle-as="json" on-response="getExistingBord"></iron-ajax>
+		<iron-ajax id="xhr2" handle-as="json" on-response="getExistingBord"></iron-ajax>
   </template>
 
   <script>
@@ -16,7 +16,8 @@
 				
 		handleResponse: function(e){
 			if (getCookie("bord_id") != ""){
-				xhr2.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+				this.$.xhr2.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+				this.$.xhr2.generateRequest();
 			}
 			else{
 				const resp = e.detail.response;
@@ -26,7 +27,7 @@
 		},
 		handleTap: function(e){
 			setCookie("");
-			xhr.generateRequest();
+			this.$.xhr.generateRequest();
 		},
 		getExistingBord: function(e){
 			const resp = e.detail.response;

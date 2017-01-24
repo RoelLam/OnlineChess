@@ -16,13 +16,12 @@
 			<div id="poging2" style="height:{{height}}px;"><iron-image id="schaakbord" style="height:{{height}}px; width:{{width}}px;"sizing="contain" src="/Bord/Chess_Board.png"></iron-image></div>
 			<content></content>
 		</center>
-		<iron-dropdown id="menu" opened="true" ><div class="dropdown-content">Hello!</div></iron-dropdown>
 	</div>
 	<div id="send">
 		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/" on-response="handleZet" handle-as="text" type="text"></iron-ajax>
 		<iron-ajax id="kleur" on-response="kleurSetten" handle-as="text" type="text"></iron-ajax>
 		<iron-ajax id="veranderStuk" on-response="stukVeranderen" handle-as="json"></iron-ajax>
-		<iron-ajax id="xhr" handle-as="json" on-response="getExistingBord"></iron-ajax>
+		<iron-ajax id="xhr3" handle-as="json" on-response="getExistingBord"></iron-ajax>
 	</div>
   </template>
 
@@ -59,23 +58,19 @@
 	  listeners: {
 		'tap':'selectPiece'
 	  },
-		ready: function(){
-			this.$.xhr.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
-		},
+
 	  handleZet: function(e){
 		var resp = e.detail.response;
-		if(resp=="true" || resp=="Schaakmat!"){
+		if(resp=="true"){
 			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
 			var typeColor = iconName.substr(17,iconName.length - 1); 
 			typeColorSplit = typeColor.split("_");
 			document.getElementById(startField).innerHTML="";
-			this.$.xhr.generateRequest();
+			this.$.xhr3.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+			this.$.xhr3.generateRequest();
 			if((typeColor == "PAWN_WHITE" && xcoord == 0 ) || (typeColor == "PAWN_BLACK" && xcoord == 7)){
 				this.$.veranderStuk.url = "http://localhost:8080/zetten/verander/" + schaakstukId +"/QUEEN";
 				this.$.veranderStuk.generateRequest();
-			}
-			if(resp=="Schaakmat!"){
-				alert(resp);
 			}			
 		}else{
 			alert(resp);
@@ -87,7 +82,8 @@
 			var chessColor = response.color;
 			var chessType = response.type;
 			document.getElementById(startField).innerHTML="";
-			this.$.xhr.generateRequest();
+			this.$.xhr3.url = "http://localhost:8080/zetten/bord/"+getCookie("bord_id");
+			this.$.xhr3.generateRequest();
 		},
 		
 	  kleurSetten: function(e){
@@ -106,32 +102,32 @@
 		},
 		
 	  selectPiece: function(e){
-		
-		if(!select){
-			if(e.target.className !="veld"){
-				schaakstukId = e.target.id;
-				selectedElement = e.target.parentElement;
-				this.$.kleur.url= "http://localhost:8080/zetten/isKleurAanDeBeurt/" + schaakstukId;
-				this.$.kleur.generateRequest();
-				startField = e.target.parentNode.id;
-			}
-		}else{
-			if(e.target.className !="veld"){
-				endField = e.target.parentNode.id;
-			}else {
-				endField = e.target.id;
-			}
-			select = !select;
-			if(startField != endField){
-				xcoord = endField.charAt(3);
-				ycoord = endField.charAt(4);
-				
-				this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + xcoord + "/" + ycoord;
-				this.$.zet.generateRequest();
-			}
-			selectedElement.className = 'veld';
-		}		
-		
+		if(e.target.id != "poging2"){
+			if(!select){
+				if(e.target.className !="veld"){
+					schaakstukId = e.target.id;
+					selectedElement = e.target.parentElement;
+					this.$.kleur.url= "http://localhost:8080/zetten/isKleurAanDeBeurt/" + schaakstukId;
+					this.$.kleur.generateRequest();
+					startField = e.target.parentNode.id;
+				}
+			}else{
+				if(e.target.className !="veld"){
+					endField = e.target.parentNode.id;
+				}else {
+					endField = e.target.id;
+				}
+				select = !select;
+				if(startField != endField){
+					xcoord = endField.charAt(3);
+					ycoord = endField.charAt(4);
+					
+					this.$.zet.url="http://localhost:8080/zetten/zet/" + schaakstukId + "/" + xcoord + "/" + ycoord;
+					this.$.zet.generateRequest();
+				}
+				selectedElement.className = 'veld';
+			}		
+		}
 	 },
 		
     });
