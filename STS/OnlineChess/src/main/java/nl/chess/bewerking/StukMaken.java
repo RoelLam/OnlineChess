@@ -69,7 +69,13 @@ public class StukMaken {
 			if(zetMag){
 				Integer xOud = stuk.getCoords().get(0);
 				Integer yOud = stuk.getCoords().get(1);
-							
+				
+				SchaakStuk geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(x,y));
+				if(geslagenStuk != null){
+					geslagenStuk.setOnBoard(false);
+					dataStuk.save(geslagenStuk);
+				}
+				
 				stuk.getCoords().clear();
 				stuk.getCoords().add(x);
 				stuk.getCoords().add(y);
@@ -78,27 +84,39 @@ public class StukMaken {
 				if(staatSchaak(stuk.getBord(),stuk.getColor())){
 					zetMag = false;
 				}
-				stuk.getCoords().clear();
-				stuk.getCoords().add(xOud);
-				stuk.getCoords().add(yOud);
-				dataStuk.save(stuk);
 				
-				
-				if(zetMag){
-					SchaakStuk geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(x,y));	
-
+				if(!zetMag){
+					stuk.getCoords().clear();
+					stuk.getCoords().add(xOud);
+					stuk.getCoords().add(yOud);
+					
 					if(geslagenStuk != null){
-						geslagenStuk.setOnBoard(false);
+						geslagenStuk.setOnBoard(true);
 						dataStuk.save(geslagenStuk);
 					}
-					stuk.getCoords().clear();			
-					stuk.getCoords().add(x);
-					stuk.getCoords().add(y);
+					dataStuk.save(stuk);
+				}else{
+					if(stuk.getType()==ChessType.KING){
+						if(y-yOud == -2){
+							SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,0));
+							toren.getCoords().clear();
+							toren.getCoords().add(x);
+							toren.getCoords().add(3);
+							dataStuk.save(toren);
+						}
+						if(y-yOud == 2){
+							SchaakStuk toren = stuk.getType().staatErStuk(stuk.getBord(), Arrays.asList(x,7));
+							toren.getCoords().clear();
+							toren.getCoords().add(x);
+							toren.getCoords().add(5);
+							dataStuk.save(toren);
+						}						
+					}	
 					
+					stuk.setRokeren(false);
 					dataStuk.save(stuk);
 					andereKleurAanDeBeurt(stuk);
 				}
-
 			}
 			return zetMag.toString();
 		}
@@ -171,7 +189,7 @@ public class StukMaken {
 		}		
 				
 		for(SchaakStuk stuk : bord.getSchaakStukken()){
-			if(stuk.getColor()==andereKleur(color)){
+			if(stuk.getColor()==andereKleur(color) && stuk.getOnBoard()){
 				if(stuk.getType().kanNaar(stuk,coordsKoning)){
 					return true;
 				}
