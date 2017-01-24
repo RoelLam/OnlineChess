@@ -19,6 +19,7 @@
 	<div id="send">
 		<iron-ajax id="zet" url="http://localhost:8080/zetten/zet/" on-response="handleZet" handle-as="text" type="text"></iron-ajax>
 		<iron-ajax id="kleur" on-response="kleurSetten" handle-as="text" type="text"></iron-ajax>
+		<iron-ajax id="veranderStuk" on-response="stukVeranderen" handle-as="json"></iron-ajax>
 	</div>
   </template>
 
@@ -56,11 +57,24 @@
 		if(resp=="true"){
 			var iconName = document.getElementById(schaakstukId).getAttribute('icon');
 			var typeColor = iconName.substr(17,iconName.length - 1); 
-			typeColor = typeColor.split("_");
+			typeColorSplit = typeColor.split("_");
 			document.getElementById(startField).innerHTML="";
-			toonStuk(typeColor[0],typeColor[1],schaakstukId,xcoord,ycoord);	
+			toonStuk(typeColorSplit[0],typeColorSplit[1],schaakstukId,xcoord,ycoord);
+			if((typeColor == "PAWN_WHITE" && xcoord == 0 ) || (typeColor == "PAWN_BLACK" && xcoord == 7)){
+				console.log('opdelaatsterij');
+				this.$.veranderStuk.url = "http://localhost:8080/zetten/verander/" + schaakstukId +"/QUEEN";
+				this.$.veranderStuk.generateRequest();
+			}
 		}
 	  },
+		
+		stukVeranderen: function(e){
+			var response = e.detail.response;
+			var chessColor = response.color;
+			var chessType = response.type;
+			document.getElementById(startField).innerHTML="";
+			toonStuk(chessType, chessColor, schaakstukId, xcoord, ycoord);
+		},
 		
 	  kleurSetten: function(e){
 		aanDeBeurt = e.detail.response;

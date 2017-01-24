@@ -56,6 +56,7 @@ public class SchaakStuk {
 	public void setType(ChessType type) {
 		this.type = type;
 	}
+
 	public ChessColor getColor() {
 		return color;
 	}

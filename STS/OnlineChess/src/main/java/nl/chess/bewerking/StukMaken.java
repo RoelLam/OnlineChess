@@ -124,10 +124,12 @@ public class StukMaken {
 		}
 	}
 	
-	@RequestMapping("verander/{type}")
-	public SchaakStuk changePiece(@ModelAttribute SchaakStuk pion, @PathVariable ChessType type) {
-		pion.setType(type);
-		return dataStuk.save(pion);		
+	@CrossOrigin("http://localhost:8081")
+	@RequestMapping("verander/{schaakstukId}/{type}")
+	public SchaakStuk changePiece(@PathVariable Long schaakstukId, @PathVariable ChessType type) {
+		SchaakStuk s = dataStuk.findOne(schaakstukId);
+		s.setType(type);
+		return dataStuk.save(s);		
 	}
 	
 	public boolean magZetten(SchaakStuk stuk, Integer x, Integer y){
