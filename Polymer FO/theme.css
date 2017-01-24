@@ -4,3 +4,6 @@
 .achtergrondKleur{
 	background:rgba(255,255,255,0.5);
 }
+.dropdown-content{
+	z-index: -9999;
+}
