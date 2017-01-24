@@ -74,6 +74,10 @@ public class StukMaken {
 				if(geslagenStuk != null){
 					geslagenStuk.setOnBoard(false);
 					dataStuk.save(geslagenStuk);
+				}else if(stuk.getType()==ChessType.PAWN && yOud - y != 0){
+					geslagenStuk = stuk.getType().staatErStuk(stuk.getBord(),Arrays.asList(xOud,y));
+					geslagenStuk.setOnBoard(false);
+					dataStuk.save(geslagenStuk);
 				}
 				
 				stuk.getCoords().clear();
@@ -113,8 +117,15 @@ public class StukMaken {
 						}						
 					}	
 					
+					if(stuk.getType()==ChessType.PAWN && Math.abs(x-xOud)==2){
+							stuk.getBord().setEnPassant(y);		
+					}else{
+						stuk.getBord().setEnPassant(-1);
+					}
+					
+					dataBord.save(stuk.getBord());
 					stuk.setRokeren(false);
-					dataStuk.save(stuk);
+					stuk = dataStuk.save(stuk);
 					andereKleurAanDeBeurt(stuk);
 				}
 			}
