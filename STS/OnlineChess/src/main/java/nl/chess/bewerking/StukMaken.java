@@ -38,6 +38,11 @@ public class StukMaken {
 					SchaakStuk stuk = new SchaakStuk();
 					stuk.setBord(b);
 					stuk.setType(schaakstukType);
+					if(stuk.getType()==ChessType.KING || stuk.getType()==ChessType.ROOK){
+						stuk.setRokeren(true);
+					}else{
+						stuk.setRokeren(false);
+					}
 					stuk.setColor(color);
 					stuk.setOnBoard(true);
 					List<Integer> coordinaten = schaakstukType.getCoordinaten(color, kolom);
@@ -75,8 +80,6 @@ public class StukMaken {
 					stuk.getCoords().add(yOud);
 					dataStuk.save(stuk);
 				}else{
-	
-					dataStuk.save(stuk);
 					andereKleurAanDeBeurt(stuk);
 				}
 			}

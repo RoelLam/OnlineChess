@@ -28,6 +28,15 @@ public class SchaakStuk {
 	
 	@Enumerated(EnumType.STRING)
 	private ChessColor color;
+	
+	public Boolean getRokeren() {
+		return rokeren;
+	}
+	public void setRokeren(Boolean rokeren) {
+		this.rokeren = rokeren;
+	}
+	@Column(nullable=false)
+	private Boolean rokeren;	
 	@Column(nullable=false)
 	private Boolean onBoard = Boolean.TRUE;
 	@ElementCollection(fetch = FetchType.EAGER)
